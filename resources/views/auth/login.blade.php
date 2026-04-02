@@ -1,47 +1,71 @@
 <x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <form method="POST" action="{{ route('login') }}">
+    <!-- Page heading -->
+    <div class="mb-8">
+        <h1 class="text-2xl font-bold text-gray-900 tracking-tight">Masuk ke Akun</h1>
+        <p class="mt-1.5 text-sm text-gray-500">Masukkan kredensial Anda untuk mengakses akun</p>
+    </div>
+
+    <!-- Session Status -->
+    <x-auth-session-status class="mb-5" :status="session('status')" />
+
+    <form method="POST" action="{{ route('login') }}" class="space-y-5">
         @csrf
 
-        <!-- Email Address -->
+        <!-- Email -->
         <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            <x-input-label for="email" :value="__('Alamat Email')" />
+            <x-text-input id="email" class="mt-1.5" type="email" name="email"
+                          :value="old('email')" required autofocus autocomplete="username"
+                          placeholder="nama@email.com" />
+            <x-input-error class="mt-1.5" :messages="$errors->get('email')" />
         </div>
 
         <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <div>
+            <x-input-label for="password" :value="__('Kata Sandi')" />
+            <x-text-input id="password" class="mt-1.5" type="password"
+                          name="password" required autocomplete="current-password"
+                          placeholder="Masukkan kata sandi" />
+            <x-input-error class="mt-1.5" :messages="$errors->get('password')" />
         </div>
 
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+        <!-- Remember + Forgot -->
+        <div class="flex items-center justify-between">
+            <label for="remember_me" class="inline-flex items-center gap-2 cursor-pointer select-none">
+                <input id="remember_me" type="checkbox"
+                       class="w-4 h-4 rounded border-gray-300 text-chocolate-500 focus:ring-chocolate-400 cursor-pointer"
+                       name="remember">
+                <span class="text-sm text-gray-600">Ingat saya</span>
             </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
             @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
+                <a class="text-sm font-medium text-chocolate-600 hover:text-chocolate-700 transition-colors"
+                   href="{{ route('password.request') }}">
+                    Lupa kata sandi?
                 </a>
             @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
         </div>
+
+        <!-- Submit -->
+        <x-primary-button class="w-full mt-2">
+            Masuk
+        </x-primary-button>
     </form>
+
+    <!-- Divider -->
+    <div class="flex items-center gap-3 my-7">
+        <div class="flex-1 h-px bg-gray-200"></div>
+        <span class="text-xs text-gray-400 font-medium">BARU DI UD TRISNA PUTRA?</span>
+        <div class="flex-1 h-px bg-gray-200"></div>
+    </div>
+
+    <!-- Register CTA -->
+    <p class="text-center text-sm text-gray-500">
+        Belum punya akun?
+        <a class="font-semibold text-chocolate-600 hover:text-chocolate-700 transition-colors"
+           href="{{ route('register') }}">
+            Daftar sekarang
+        </a>
+    </p>
+
 </x-guest-layout>
