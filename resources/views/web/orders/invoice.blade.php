@@ -54,6 +54,9 @@
                         <p class="text-xs uppercase tracking-wider text-chocolate-600 font-semibold mb-2">Bill To</p>
                         <p class="font-semibold text-chocolate-600">{{ $order->user->name }}</p>
                         <p class="text-sm body-text">{{ $order->user->email }}</p>
+                        @if($order->phone)
+                            <p class="text-sm body-text">{{ $order->phone }}</p>
+                        @endif
                         <p class="text-sm body-text mt-2">{{ $order->shipping_address }}</p>
                     </div>
                     <div>

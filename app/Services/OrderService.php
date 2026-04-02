@@ -37,6 +37,7 @@ class OrderService
                 'status' => OrderStatus::Pending,
                 'total_amount' => $totalAmount,
                 'shipping_address' => $data['shipping_address'],
+                'phone' => $data['phone'],
                 'payment_method' => $data['payment_method'],
                 'notes' => $data['notes'] ?? null,
                 'invoice_date' => now(),

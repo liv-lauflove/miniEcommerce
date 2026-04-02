@@ -35,6 +35,7 @@ class CheckoutController extends Controller
     {
         $validated = $request->validate([
             'shipping_address' => 'required|string|max:500',
+            'phone' => 'required|string|min:10|max:20',
             'payment_method' => 'required|string|in:bank_transfer,cod,ewallet',
             'notes' => 'nullable|string|max:1000',
         ]);

@@ -8,12 +8,17 @@
                 {{-- Form --}}
                 <div class="lg:col-span-2 space-y-6">
                     <div class="card p-6">
-                        <h2 class="font-semibold text-chocolate-600 mb-4">Shipping Address</h2>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="form-label">Full Address *</label>
-                                <textarea name="shipping_address" rows="3" class="form-textarea" placeholder="Enter your full shipping address" required>{{ old('shipping_address') }}</textarea>
+                        <h2 class="font-semibold text-chocolate-600 mb-4">Informasi Pengiriman</h2>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="sm:col-span-2">
+                                <label class="form-label">Alamat Lengkap *</label>
+                                <textarea name="shipping_address" rows="3" class="form-textarea" placeholder="Nama jalan, nomor rumah, RT/RW, kelurahan, kecamatan" required>{{ old('shipping_address') }}</textarea>
                                 @error('shipping_address') <p class="form-error">{{ $message }}</p> @enderror
+                            </div>
+                            <div class="sm:col-span-2">
+                                <label class="form-label">Nomor Telepon / WhatsApp *</label>
+                                <input type="tel" name="phone" value="{{ old('phone') }}" class="form-input" placeholder="08xxxxxxxxxx" required>
+                                @error('phone') <p class="form-error">{{ $message }}</p> @enderror
                             </div>
                         </div>
                     </div>
