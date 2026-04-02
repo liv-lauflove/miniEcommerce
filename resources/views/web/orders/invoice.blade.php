@@ -116,7 +116,7 @@
 
             {{-- Footer --}}
             <div class="px-8 py-4 border-t border-gray-100 text-center">
-                <p class="text-xs muted-text">Thank you for your purchase! Questions? Contact hello@udtrisnaputra.com</p>
+                <p class="text-xs muted-text">Terima kasih atas pesanannya! Pertanyaan? Hubungi hello@udtrisnaputra.com</p>
             </div>
         </div>
     </div>

@@ -80,6 +80,9 @@
         <div class="info-label">Bill To</div>
         <div class="info-value">{{ $order->user->name }}</div>
         <div class="info-detail">{{ $order->user->email }}</div>
+        @if($order->phone)
+            <div class="info-detail">{{ $order->phone }}</div>
+        @endif
         <div class="info-detail" style="margin-top: 8px;">{{ $order->shipping_address }}</div>
     </div>
     <div class="info-block">

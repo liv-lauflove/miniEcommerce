@@ -55,6 +55,11 @@ class Order extends Model
         return $this->status->color();
     }
 
+    public function getNextStatusAttribute(): ?OrderStatus
+    {
+        return $this->status->next();
+    }
+
     public static function generateInvoiceNumber(): string
     {
         $prefix = 'INV-' . date('Ymd');

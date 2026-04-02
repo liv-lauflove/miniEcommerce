@@ -32,10 +32,10 @@
             <select name="status" class="form-select w-40 py-2 text-sm">
                 <option value="">Semua Status</option>
                 <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
-                <option value="processing" {{ request('status') == 'processing' ? 'selected' : '' }}>Processing</option>
-                <option value="shipped" {{ request('status') == 'shipped' ? 'selected' : '' }}>Shipped</option>
-                <option value="delivered" {{ request('status') == 'delivered' ? 'selected' : '' }}>Delivered</option>
-                <option value="cancelled" {{ request('status') == 'cancelled' ? 'selected' : '' }}>Cancelled</option>
+                <option value="processing" {{ request('status') == 'processing' ? 'selected' : '' }}>Diproses</option>
+                <option value="shipped" {{ request('status') == 'shipped' ? 'selected' : '' }}>Dikirim</option>
+                <option value="delivered" {{ request('status') == 'delivered' ? 'selected' : '' }}>Selesai</option>
+                <option value="cancelled" {{ request('status') == 'cancelled' ? 'selected' : '' }}>Batal</option>
             </select>
             <button type="submit" class="btn-secondary btn-sm whitespace-nowrap">Filter</button>
             @if(request()->has('search') || request()->has('status'))
@@ -67,36 +67,41 @@
                             </td>
                             <td class="text-gray-700">{{ $order->user->name }}</td>
                             <td>
-                                <span class="badge-gray">{{ $order->items->count() }} item</span>
+                                <span class="badge badge-gray">{{ $order->items->count() }} item</span>
                             </td>
                             <td class="font-semibold text-gray-800">{{ $order->formatted_total }}</td>
                             <td>
                                 @php
-                                    $statusConfig = [
-                                        'pending'    => ['label' => 'Pending',    'color' => 'yellow', 'bg' => 'bg-yellow-100', 'text' => 'text-yellow-800'],
-                                        'processing' => ['label' => 'Diproses',   'color' => 'blue',   'bg' => 'bg-blue-100',   'text' => 'text-blue-800'],
-                                        'shipped'    => ['label' => 'Dikirim',   'color' => 'indigo', 'bg' => 'bg-indigo-100','text' => 'text-indigo-800'],
-                                        'delivered'  => ['label' => 'Selesai',   'color' => 'green',  'bg' => 'bg-green-100',  'text' => 'text-green-800'],
-                                        'cancelled'  => ['label' => 'Batal',     'color' => 'gray',   'bg' => 'bg-gray-100',   'text' => 'text-gray-600'],
+                                    $statuses = [
+                                        'pending'    => ['label' => 'Pending',    'bg' => 'bg-yellow-100', 'text' => 'text-yellow-800', 'dot' => 'bg-yellow-400'],
+                                        'processing' => ['label' => 'Diproses',   'bg' => 'bg-blue-100',   'text' => 'text-blue-800',   'dot' => 'bg-blue-400'],
+                                        'shipped'   => ['label' => 'Dikirim',   'bg' => 'bg-indigo-100','text' => 'text-indigo-800','dot' => 'bg-indigo-400'],
+                                        'delivered'  => ['label' => 'Selesai',   'bg' => 'bg-green-100',  'text' => 'text-green-800',  'dot' => 'bg-green-400'],
+                                        'cancelled'  => ['label' => 'Batal',     'bg' => 'bg-gray-100',   'text' => 'text-gray-500',   'dot' => 'bg-gray-400'],
                                     ];
-                                    $cfg = $statusConfig[$order->status->value] ?? ['label' => $order->status->value, 'color' => 'gray', 'bg' => 'bg-gray-100', 'text' => 'text-gray-600'];
+                                    $current = $statuses[$order->status->value] ?? ['label' => $order->status->value, 'bg' => 'bg-gray-100', 'text' => 'text-gray-500', 'dot' => 'bg-gray-400'];
                                 @endphp
-                                <div class="relative" x-data="{ open: false }">
-                                    <button @click="open = !open"
-                                            class="badge {{ $cfg['bg'] }} {{ $cfg['text'] }} cursor-pointer hover:opacity-80 transition-opacity flex items-center gap-1">
-                                        {{ $cfg['label'] }}
-                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+
+                                <div>
+                                    <button type="button" onclick="showStatusMenu(this)"
+                                            class="badge {{ $current['bg'] }} {{ $current['text'] }} hover:opacity-75 transition-opacity flex items-center gap-1.5 select-none cursor-pointer">
+                                        <span class="w-1.5 h-1.5 rounded-full {{ $current['dot'] }}"></span>
+                                        {{ $current['label'] }}
+                                        <svg class="w-3 h-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                                     </button>
-                                    <div x-show="open" @click.away="open = false"
-                                         x-transition class="absolute z-20 mt-1 w-44 bg-white border border-gray-200 rounded-xl shadow-lg py-1 text-sm">
-                                        @foreach($statusConfig as $value => $config)
+
+                                    <div class="status-menu hidden fixed z-[9999] min-w-[140px] bg-white border border-gray-200 rounded-xl shadow-xl py-1.5">
+                                        @foreach($statuses as $value => $s)
                                             <form method="POST" action="{{ route('admin.orders.update-status', $order->id) }}">
                                                 @csrf
                                                 @method('PATCH')
                                                 <input type="hidden" name="status" value="{{ $value }}">
-                                                <button type="submit" @click="open = false"
-                                                        class="w-full text-left px-4 py-2 hover:bg-cream-50 transition-colors {{ $order->status->value === $value ? 'font-semibold text-chocolate-600' : 'text-gray-700' }}">
-                                                    {{ $config['label'] }}
+                                                <button type="submit" class="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm hover:bg-cream-50 transition-colors {{ $order->status->value === $value ? 'font-semibold text-chocolate-600' : 'text-gray-600' }}">
+                                                    <span class="w-2 h-2 rounded-full {{ $s['dot'] }} {{ $order->status->value === $value ? 'ring-2 ring-offset-1 ring-chocolate-400' : '' }}"></span>
+                                                    {{ $s['label'] }}
+                                                    @if($order->status->value === $value)
+                                                        <svg class="w-3.5 h-3.5 ml-auto text-chocolate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                                                    @endif
                                                 </button>
                                             </form>
                                         @endforeach
@@ -114,7 +119,7 @@
                                         </svg>
                                     </a>
                                     <form method="POST" action="{{ route('admin.orders.destroy', $order->id) }}"
-                                          class="inline" onsubmit="return confirm('Hapus invoice {{ $order->invoice_number }}? Tindakan ini tidak bisa dibatalkan.')">
+                                          class="inline" onsubmit="return confirm('Hapus invoice {{ $order->invoice_number }}?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn-icon text-gray-400 hover:text-red-600" title="Hapus invoice">
@@ -151,4 +156,43 @@
         @endif
     </div>
 
+    @push('scripts')
+    <script>
+        function showStatusMenu(btn) {
+            const menu = btn.nextElementSibling;
+            const isHidden = menu.classList.contains('hidden');
+
+            // Close all menus first
+            document.querySelectorAll('.status-menu').forEach(m => m.classList.add('hidden'));
+
+            if (isHidden) {
+                menu.classList.remove('hidden');
+
+                // Position fixed at button's bottom-left
+                const rect = btn.getBoundingClientRect();
+                let top = rect.bottom + 4;
+                let left = rect.left;
+
+                // Flip left if too close to right edge
+                if (rect.right + 160 > window.innerWidth) {
+                    left = rect.right - 160;
+                }
+
+                // Flip up if too close to bottom
+                if (top + 200 > window.innerHeight) {
+                    top = rect.top - 200 - 4;
+                }
+
+                menu.style.top = top + 'px';
+                menu.style.left = left + 'px';
+            }
+        }
+
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('.status-menu') && !e.target.closest('button')) {
+                document.querySelectorAll('.status-menu').forEach(m => m.classList.add('hidden'));
+            }
+        });
+    </script>
+    @endpush
 </x-layouts.admin>
