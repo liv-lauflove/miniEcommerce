@@ -3,7 +3,7 @@
         {{-- Header --}}
         <div class="mb-8">
             <h1 class="text-2xl md:text-3xl font-bold text-chocolate-600 mb-2">Shop</h1>
-            <p class="body-text">Browse our full collection of products.</p>
+            <p class="body-text">Jelajahi produk kami selengkapnya.</p>
         </div>
 
         <div class="flex flex-col lg:flex-row gap-8">
