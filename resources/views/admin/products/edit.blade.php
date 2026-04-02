@@ -51,15 +51,34 @@
 
             <div class="card p-6 space-y-4">
                 <h2 class="font-semibold text-chocolate-600">Image & Status</h2>
-                @if($product->image)
-                    <div>
-                        <p class="text-sm font-medium text-chocolate-600 mb-2">Current Image</p>
-                        <img src="{{ asset('storage/' . $product->image) }}" class="w-32 h-32 object-cover rounded-lg border border-gray-100">
-                    </div>
-                @endif
                 <div>
-                    <label class="form-label">Replace Image</label>
-                    <input type="file" name="image" accept="image/*" class="form-input file:border-0 file:bg-cream-50 file:text-cream-700 file:font-medium file:rounded-lg file:px-4 file:py-2 file:mr-3">
+                    <label class="form-label">Product Image</label>
+                    <div class="mt-1.5 flex items-start gap-4">
+                        @if($product->image)
+                            <div id="currentImageBox">
+                                <p class="text-xs text-gray-400 mb-1.5">Gambar saat ini</p>
+                                <div class="w-28 h-28 rounded-xl border border-gray-100 overflow-hidden">
+                                    <img src="{{ asset('storage/' . $product->image) }}" class="w-full h-full object-cover">
+                                </div>
+                            </div>
+                        @endif
+                        <div id="imagePreview" class="hidden">
+                            <p class="text-xs text-gray-400 mb-1.5">Preview baru</p>
+                            <div class="w-28 h-28 rounded-xl border-2 border-dashed border-chocolate-200 overflow-hidden">
+                                <img id="previewImg" src="" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        <label class="flex-1 cursor-pointer">
+                            <div id="uploadBox" class="border-2 border-dashed border-gray-200 rounded-xl p-6 flex flex-col items-center justify-center gap-2 hover:border-chocolate-300 hover:bg-cream-50 transition-colors">
+                                <svg class="w-8 h-8 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                </svg>
+                                <span class="text-sm text-gray-500">Klik untuk ganti</span>
+                                <span class="text-xs text-gray-400">JPG, PNG, atau WebP · Maks 2MB</span>
+                            </div>
+                            <input type="file" name="image" id="imageInput" accept="image/*" class="hidden">
+                        </label>
+                    </div>
                     @error('image') <p class="form-error">{{ $message }}</p> @enderror
                 </div>
                 <label class="flex items-center gap-3 cursor-pointer">
@@ -67,6 +86,29 @@
                     <span class="text-sm font-medium text-chocolate-600">Active (visible on store)</span>
                 </label>
             </div>
+
+            @push('scripts')
+            <script>
+                const input = document.getElementById('imageInput');
+                const preview = document.getElementById('imagePreview');
+                const previewImg = document.getElementById('previewImg');
+                const uploadBox = document.getElementById('uploadBox');
+                const currentBox = document.getElementById('currentImageBox');
+
+                input.addEventListener('change', function () {
+                    const file = this.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            previewImg.src = e.target.result;
+                            preview.classList.remove('hidden');
+                            if (currentBox) currentBox.classList.add('hidden');
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            </script>
+            @endpush
 
             <div class="flex gap-3">
                 <button type="submit" class="btn-primary">Update Product</button>

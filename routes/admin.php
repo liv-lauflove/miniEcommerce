@@ -13,4 +13,5 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
     Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
     Route::patch('orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.update-status');
+    Route::delete('orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
 });
