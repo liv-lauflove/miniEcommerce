@@ -30,22 +30,6 @@
             <x-input-error class="mt-1.5" :messages="$errors->get('password')" />
         </div>
 
-        <!-- Remember + Forgot -->
-        <div class="flex items-center justify-between">
-            <label for="remember_me" class="inline-flex items-center gap-2 cursor-pointer select-none">
-                <input id="remember_me" type="checkbox"
-                       class="w-4 h-4 rounded border-gray-300 text-chocolate-500 focus:ring-chocolate-400 cursor-pointer"
-                       name="remember">
-                <span class="text-sm text-gray-600">Ingat saya</span>
-            </label>
-            @if (Route::has('password.request'))
-                <a class="text-sm font-medium text-chocolate-600 hover:text-chocolate-700 transition-colors"
-                   href="{{ route('password.request') }}">
-                    Lupa kata sandi?
-                </a>
-            @endif
-        </div>
-
         <!-- Submit -->
         <x-primary-button class="w-full mt-2">
             Masuk

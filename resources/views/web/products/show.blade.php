@@ -73,8 +73,8 @@
 
                 <div class="card p-4 text-sm">
                     <div class="flex items-center gap-3">
-                        <svg class="w-5 h-5 text-chocolate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
-                        <span class="body-text">Free shipping on orders over Rp 500.000</span>
+                        <svg class="w-5 h-5 text-chocolate-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                        <span class="body-text">100% Original.</span>
                     </div>
                 </div>
             </div>
@@ -83,7 +83,7 @@
         {{-- Related Products --}}
         @if($relatedProducts->isNotEmpty())
         <div class="mt-16">
-            <h2 class="section-title">Related Products</h2>
+            <h2 class="section-title">Produk Terkait</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
                 @foreach($relatedProducts as $related)
                     <x-product-card :product="$related" />
