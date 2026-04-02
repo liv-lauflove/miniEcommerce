@@ -5,13 +5,13 @@
 @layer components {
     /* Buttons */
     .btn-primary {
-        @apply inline-flex items-center justify-center px-6 py-2.5 bg-oxford-500 text-white font-medium rounded-lg hover:bg-oxford-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-oxford-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+        @apply inline-flex items-center justify-center px-6 py-2.5 bg-chocolate-500 text-white font-medium rounded-lg hover:bg-chocolate-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-chocolate-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
     }
     .btn-accent {
-        @apply inline-flex items-center justify-center px-6 py-2.5 bg-tan-500 text-white font-medium rounded-lg hover:bg-tan-600 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-tan-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
+        @apply inline-flex items-center justify-center px-6 py-2.5 bg-cream-500 text-white font-medium rounded-lg hover:bg-cream-400 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-cream-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed;
     }
     .btn-secondary {
-        @apply inline-flex items-center justify-center px-6 py-2.5 bg-white text-oxford-700 border border-oxford-200 font-medium rounded-lg hover:bg-oxford-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-oxford-500 focus:ring-offset-2 disabled:opacity-50;
+        @apply inline-flex items-center justify-center px-6 py-2.5 bg-white text-chocolate-600 border border-chocolate-200 font-medium rounded-lg hover:bg-cream-50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-chocolate-500 focus:ring-offset-2 disabled:opacity-50;
     }
     .btn-ghost {
         @apply inline-flex items-center justify-center px-4 py-2 text-gray-600 font-medium rounded-lg hover:bg-gray-100 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-gray-300;
@@ -23,7 +23,7 @@
         @apply px-4 py-2 text-sm;
     }
     .btn-icon {
-        @apply p-2 rounded-lg hover:bg-gray-100 text-gray-500 hover:text-oxford-600 transition-colors;
+        @apply p-2 rounded-lg hover:bg-gray-100 text-gray-500 hover:text-chocolate-500 transition-colors;
     }
 
     /* Cards */
@@ -34,7 +34,7 @@
         @apply card hover:shadow-lift transition-shadow duration-300;
     }
     .card-warm {
-        @apply bg-tan-50 border border-tan-200 rounded-xl;
+        @apply bg-cream-50 border border-cream-200 rounded-xl;
     }
 
     /* Form inputs */
@@ -42,13 +42,13 @@
         @apply block text-sm font-medium text-gray-700 mb-1;
     }
     .form-input {
-        @apply w-full px-4 py-2.5 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-oxford-500 focus:border-transparent transition-colors;
+        @apply w-full px-4 py-2.5 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-chocolate-400 focus:border-transparent transition-colors;
     }
     .form-select {
-        @apply w-full px-4 py-2.5 border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-oxford-500 focus:border-transparent transition-colors bg-white;
+        @apply w-full px-4 py-2.5 border border-gray-200 rounded-lg text-gray-900 focus:outline-none focus:ring-2 focus:ring-chocolate-400 focus:border-transparent transition-colors bg-white;
     }
     .form-textarea {
-        @apply w-full px-4 py-2.5 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-oxford-500 focus:border-transparent transition-colors resize-none;
+        @apply w-full px-4 py-2.5 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-chocolate-400 focus:border-transparent transition-colors resize-none;
     }
     .form-error {
         @apply text-sm text-red-600 mt-1;
@@ -76,8 +76,11 @@
     .badge-gray {
         @apply badge bg-gray-100 text-gray-700;
     }
-    .badge-tan {
-        @apply badge bg-tan-100 text-tan-800;
+    .badge-cream {
+        @apply badge bg-cream-100 text-chocolate-700;
+    }
+    .badge-berry {
+        @apply badge bg-berry-100 text-berry-700;
     }
 
     /* Alerts */
@@ -105,7 +108,7 @@
         @apply w-full text-sm text-left;
     }
     .table thead {
-        @apply bg-gray-50 border-b border-gray-100;
+        @apply bg-cream-50 border-b border-gray-100;
     }
     .table th {
         @apply px-4 py-3 font-medium text-gray-600 uppercase tracking-wider text-xs;
@@ -114,15 +117,15 @@
         @apply px-4 py-3 text-gray-800;
     }
     .table tbody tr {
-        @apply border-b border-gray-50 last:border-0 hover:bg-gray-50/50 transition-colors;
+        @apply border-b border-gray-50 last:border-0 hover:bg-cream-50/50 transition-colors;
     }
 
     /* Typography */
     .heading {
-        @apply text-oxford-900 font-semibold;
+        @apply text-chocolate-600 font-semibold;
     }
     .subheading {
-        @apply text-oxford-600 font-medium;
+        @apply text-chocolate-500 font-medium;
     }
     .body-text {
         @apply text-gray-600;
@@ -136,15 +139,15 @@
         @apply py-12 md:py-16;
     }
     .section-title {
-        @apply text-2xl md:text-3xl font-bold text-oxford-900 mb-8;
+        @apply text-2xl md:text-3xl font-bold text-chocolate-600 mb-8;
     }
 
     /* Navbar */
     .nav-link {
-        @apply text-gray-600 hover:text-oxford-600 font-medium transition-colors duration-200;
+        @apply text-gray-600 hover:text-chocolate-500 font-medium transition-colors duration-200;
     }
     .nav-link-active {
-        @apply text-oxford-600 font-medium;
+        @apply text-chocolate-500 font-medium;
     }
 
     /* Pagination */
@@ -152,10 +155,10 @@
         @apply flex items-center gap-1;
     }
     .pagination-item {
-        @apply w-9 h-9 flex items-center justify-center rounded-lg text-sm font-medium text-gray-600 hover:bg-oxford-50 hover:text-oxford-600 transition-colors;
+        @apply w-9 h-9 flex items-center justify-center rounded-lg text-sm font-medium text-gray-600 hover:bg-cream-50 hover:text-chocolate-500 transition-colors;
     }
     .pagination-item-active {
-        @apply w-9 h-9 flex items-center justify-center rounded-lg text-sm font-medium bg-oxford-500 text-white;
+        @apply w-9 h-9 flex items-center justify-center rounded-lg text-sm font-medium bg-chocolate-500 text-white;
     }
 }
 

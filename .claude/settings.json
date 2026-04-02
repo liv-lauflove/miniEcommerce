@@ -4,7 +4,8 @@
       "Bash(composer require:*)",
       "Bash(php artisan:*)",
       "Bash(mysql -h 127.0.0.1 -P 3307 -u root db_miniecommerce -e \"SHOW TABLES;\")",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(python3)"
     ],
     "additionalDirectories": [
       "/Users/troybhareswara/.claude/plans"

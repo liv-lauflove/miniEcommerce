@@ -8,7 +8,7 @@ use App\Services\InvoiceService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
-use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class OrderController extends Controller
 {
@@ -33,7 +33,7 @@ class OrderController extends Controller
         return view('web.orders.show', compact('order'));
     }
 
-    public function invoice(Order $order): View|StreamedResponse
+    public function invoice(Order $order): View|Response
     {
         abort_unless($order->user_id === Auth::id(), 403);
 
@@ -46,7 +46,7 @@ class OrderController extends Controller
         return view('web.orders.invoice', compact('order'));
     }
 
-    public function downloadInvoice(Order $order): StreamedResponse
+    public function downloadInvoice(Order $order): Response
     {
         abort_unless($order->user_id === Auth::id(), 403);
 

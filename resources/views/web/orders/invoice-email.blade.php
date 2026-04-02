@@ -7,14 +7,14 @@
 </head>
 <body style="font-family: Arial, sans-serif; font-size: 14px; color: #1e293b; max-width: 600px; margin: 0 auto; padding: 20px;">
 
-    <div style="background: #0d1756; color: white; padding: 24px; border-radius: 8px 8px 0 0;">
+    <div style="background: #4a2c17; color: white; padding: 24px; border-radius: 8px 8px 0 0;">
         <h1 style="margin: 0; font-size: 20px;">Invoice {{ $order->invoice_number }}</h1>
-        <p style="margin: 4px 0 0; color: #94a3b8; font-size: 12px;">MiniCommerce Store</p>
+        <p style="margin: 4px 0 0; color: #94a3b8; font-size: 12px;">UD Trisna Putra Store</p>
     </div>
 
     <div style="background: #fdf8f0; padding: 20px 24px; border: 1px solid #e5e0d8;">
-        <p style="margin: 0 0 16px;">Hi <strong>{{ $order->user->name }}</strong>,</p>
-        <p style="margin: 0 0 16px; color: #64748b;">Thank you for your order! Here is your invoice summary:</p>
+        <p style="margin: 0 0 16px;">Halo <strong>{{ $order->user->name }}</strong>,</p>
+        <p style="margin: 0 0 16px; color: #64748b;">Terima kasih atas pesanan Anda! Berikut ringkasan invoice Anda:</p>
 
         <div style="background: white; border-radius: 6px; padding: 16px; margin-bottom: 16px;">
             <table style="width: 100%; border-collapse: collapse;">
@@ -37,7 +37,7 @@
             </table>
         </div>
 
-        <div style="text-align: right; font-size: 18px; font-weight: bold; color: #0d1756;">
+        <div style="text-align: right; font-size: 18px; font-weight: bold; color: #4a2c17;">
             Total: {{ $order->formatted_total }}
         </div>
 
@@ -48,8 +48,8 @@
     </div>
 
     <div style="text-align: center; padding: 20px; color: #94a3b8; font-size: 12px;">
-        <p>Questions? Reply to this email or contact hello@miniecommerce.com</p>
-        <p style="margin-top: 8px;">&copy; {{ date('Y') }} MiniCommerce. All rights reserved.</p>
+        <p>Pertanyaan? Balas email ini atau hubungi hello@udtrisnaputra.com</p>
+        <p style="margin-top: 8px;">&copy; {{ date('Y') }} UD Trisna Putra. All rights reserved.</p>
     </div>
 
 </body>

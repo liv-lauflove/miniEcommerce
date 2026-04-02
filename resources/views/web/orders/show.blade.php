@@ -4,9 +4,9 @@
         <div class="flex items-center justify-between mb-8">
             <div>
                 <div class="flex items-center gap-3 mb-1">
-                    <a href="{{ route('orders.index') }}" class="text-oxford-600 hover:text-oxford-700 text-sm">← Orders</a>
+                    <a href="{{ route('orders.index') }}" class="text-chocolate-500 hover:text-chocolate-700 text-sm">← Orders</a>
                 </div>
-                <h1 class="text-2xl md:text-3xl font-bold text-oxford-900">Order {{ $order->invoice_number }}</h1>
+                <h1 class="text-2xl md:text-3xl font-bold text-chocolate-600">Order {{ $order->invoice_number }}</h1>
             </div>
             <div class="flex gap-2">
                 <a href="{{ route('orders.invoice', $order->id) }}" class="btn-secondary btn-sm">
@@ -23,7 +23,7 @@
                 {{-- Status & Items --}}
                 <div class="card p-6">
                     <div class="flex items-center justify-between mb-6">
-                        <h2 class="font-semibold text-oxford-900">Order Items</h2>
+                        <h2 class="font-semibold text-chocolate-600">Order Items</h2>
                         <span class="badge-{{ $order->status->color() }}">{{ $order->status->label() }}</span>
                     </div>
                     <div class="space-y-4">
@@ -35,10 +35,10 @@
                                     @endif
                                 </div>
                                 <div class="flex-1 min-w-0">
-                                    <p class="font-medium text-oxford-900">{{ $item->product?->name ?? 'Product Deleted' }}</p>
+                                    <p class="font-medium text-chocolate-600">{{ $item->product?->name ?? 'Product Deleted' }}</p>
                                     <p class="text-sm body-text">{{ $item->quantity }} × {{ $item->formatted_unit_price }}</p>
                                 </div>
-                                <p class="font-semibold text-oxford-900">{{ $item->formatted_subtotal }}</p>
+                                <p class="font-semibold text-chocolate-600">{{ $item->formatted_subtotal }}</p>
                             </div>
                         @endforeach
                     </div>
@@ -46,13 +46,13 @@
 
                 {{-- Shipping Address --}}
                 <div class="card p-6">
-                    <h2 class="font-semibold text-oxford-900 mb-3">Shipping Address</h2>
+                    <h2 class="font-semibold text-chocolate-600 mb-3">Shipping Address</h2>
                     <p class="body-text">{{ $order->shipping_address }}</p>
                 </div>
 
                 @if($order->notes)
                     <div class="card p-6">
-                        <h2 class="font-semibold text-oxford-900 mb-3">Order Notes</h2>
+                        <h2 class="font-semibold text-chocolate-600 mb-3">Order Notes</h2>
                         <p class="body-text">{{ $order->notes }}</p>
                     </div>
                 @endif
@@ -61,16 +61,16 @@
             {{-- Summary --}}
             <div>
                 <div class="card p-6 sticky top-24 space-y-4">
-                    <h2 class="font-semibold text-oxford-900">Order Summary</h2>
+                    <h2 class="font-semibold text-chocolate-600">Order Summary</h2>
                     <div class="space-y-2 text-sm">
                         @foreach($order->items as $item)
                             <div class="flex justify-between">
                                 <span class="body-text">{{ $item->product?->name ?? 'Deleted' }} × {{ $item->quantity }}</span>
-                                <span class="text-oxford-900">{{ $item->formatted_subtotal }}</span>
+                                <span class="text-chocolate-600">{{ $item->formatted_subtotal }}</span>
                             </div>
                         @endforeach
                         <hr class="border-gray-100">
-                        <div class="flex justify-between font-bold text-oxford-900 pt-1">
+                        <div class="flex justify-between font-bold text-chocolate-600 pt-1">
                             <span>Total</span>
                             <span>{{ $order->formatted_total }}</span>
                         </div>
@@ -79,9 +79,9 @@
                     <hr class="border-gray-100">
 
                     <div class="space-y-2 text-sm body-text">
-                        <p><span class="font-medium text-oxford-900">Payment:</span> {{ ucfirst(str_replace('_', ' ', $order->payment_method)) }}</p>
-                        <p><span class="font-medium text-oxford-900">Date:</span> {{ $order->created_at->format('M d, Y H:i') }}</p>
-                        <p><span class="font-medium text-oxford-900">Invoice:</span> {{ $order->invoice_number }}</p>
+                        <p><span class="font-medium text-chocolate-600">Payment:</span> {{ ucfirst(str_replace('_', ' ', $order->payment_method)) }}</p>
+                        <p><span class="font-medium text-chocolate-600">Date:</span> {{ $order->created_at->format('M d, Y H:i') }}</p>
+                        <p><span class="font-medium text-chocolate-600">Invoice:</span> {{ $order->invoice_number }}</p>
                     </div>
                 </div>
             </div>

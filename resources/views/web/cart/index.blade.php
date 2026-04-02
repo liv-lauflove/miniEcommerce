@@ -1,11 +1,11 @@
 <x-layouts.web title="Shopping Cart">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 class="text-2xl md:text-3xl font-bold text-oxford-900 mb-8">Shopping Cart</h1>
+        <h1 class="text-2xl md:text-3xl font-bold text-chocolate-600 mb-8">Shopping Cart</h1>
 
         @if($cartItems->isEmpty())
             <div class="card p-12 text-center">
                 <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/></svg>
-                <h3 class="font-semibold text-oxford-900 text-lg mb-2">Your cart is empty</h3>
+                <h3 class="font-semibold text-chocolate-600 text-lg mb-2">Your cart is empty</h3>
                 <p class="body-text mb-6">Looks like you haven't added anything to your cart yet.</p>
                 <a href="{{ route('shop') }}" class="btn-primary inline-flex">Continue Shopping</a>
             </div>
@@ -28,7 +28,7 @@
 
                             {{-- Info --}}
                             <div class="flex-1 min-w-0">
-                                <a href="{{ route('product.show', $item['product']?->slug ?? $item['product_id']) }}" class="font-medium text-oxford-900 hover:text-oxford-600 transition-colors line-clamp-1">{{ $item['name'] }}</a>
+                                <a href="{{ route('product.show', $item['product']?->slug ?? $item['product_id']) }}" class="font-medium text-chocolate-600 hover:text-chocolate-500 transition-colors line-clamp-1">{{ $item['name'] }}</a>
                                 <p class="text-sm body-text mt-1">Rp {{ number_format($item['price'], 0, ',', '.') }}</p>
                                 @if(!$item['in_stock'])
                                     <span class="badge-red mt-1 text-xs">Insufficient stock</span>
@@ -49,7 +49,7 @@
 
                             {{-- Subtotal --}}
                             <div class="text-right min-w-[80px]">
-                                <p class="font-semibold text-oxford-900">{{ $item['formatted_subtotal'] }}</p>
+                                <p class="font-semibold text-chocolate-600">{{ $item['formatted_subtotal'] }}</p>
                             </div>
 
                             {{-- Remove --}}
@@ -67,20 +67,20 @@
                 {{-- Summary --}}
                 <div>
                     <div class="card p-6 sticky top-24">
-                        <h2 class="font-semibold text-oxford-900 mb-4">Order Summary</h2>
+                        <h2 class="font-semibold text-chocolate-600 mb-4">Order Summary</h2>
                         <div class="space-y-3 text-sm">
                             <div class="flex justify-between">
                                 <span class="body-text">Subtotal ({{ $cartCount }} items)</span>
-                                <span class="font-medium text-oxford-900">Rp {{ number_format($cartTotal, 0, ',', '.') }}</span>
+                                <span class="font-medium text-chocolate-600">Rp {{ number_format($cartTotal, 0, ',', '.') }}</span>
                             </div>
                             <div class="flex justify-between">
                                 <span class="body-text">Shipping</span>
-                                <span class="font-medium text-oxford-900">{{ $cartTotal >= 500000 ? 'Free' : 'Calculated at checkout' }}</span>
+                                <span class="font-medium text-chocolate-600">{{ $cartTotal >= 500000 ? 'Free' : 'Calculated at checkout' }}</span>
                             </div>
                             <hr class="border-gray-100">
                             <div class="flex justify-between text-base">
-                                <span class="font-semibold text-oxford-900">Total</span>
-                                <span class="font-bold text-oxford-900">Rp {{ number_format($cartTotal, 0, ',', '.') }}</span>
+                                <span class="font-semibold text-chocolate-600">Total</span>
+                                <span class="font-bold text-chocolate-600">Rp {{ number_format($cartTotal, 0, ',', '.') }}</span>
                             </div>
                         </div>
 

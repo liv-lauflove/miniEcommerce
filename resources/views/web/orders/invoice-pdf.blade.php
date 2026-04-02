@@ -7,7 +7,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: Arial, sans-serif; font-size: 12px; color: #1e293b; line-height: 1.5; }
-        .header { background: #0d1756; color: white; padding: 24px; }
+        .header { background: #4a2c17; color: white; padding: 24px; }
         .header-grid { display: table; width: 100%; }
         .header-left, .header-right { display: table-cell; vertical-align: top; }
         .header-right { text-align: right; }
@@ -36,8 +36,8 @@
         .total-label, .total-value { display: table-cell; }
         .total-label { color: #64748b; }
         .total-value { text-align: right; font-weight: bold; color: #1e293b; }
-        .grand-total { font-size: 14px; padding-top: 8px !important; border-top: 2px solid #0d1756; }
-        .grand-total .total-label, .grand-total .total-value { color: #0d1756 !important; }
+        .grand-total { font-size: 14px; padding-top: 8px !important; border-top: 2px solid #4a2c17; }
+        .grand-total .total-label, .grand-total .total-value { color: #4a2c17 !important; }
         .footer { padding: 16px 24px; text-align: center; color: #94a3b8; font-size: 10px; border-top: 1px solid #e2e8f0; }
         .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: bold; text-transform: uppercase; }
         .badge-yellow { background: #fef3c7; color: #92400e; }
@@ -53,12 +53,12 @@
 <div class="header">
     <div class="header-grid">
         <div class="header-left">
-            <div class="brand">MiniCommerce</div>
-            <div class="brand-sub">miniCommerce Store</div>
+            <div class="brand">UD Trisna Putra</div>
+            <div class="brand-sub">Baking Supplies Supplier</div>
             <div style="margin-top: 12px; color: #94a3b8; font-size: 11px;">
-                hello@miniecommerce.com<br>
-                +62 21 1234 5678<br>
-                Jl. Sudirman No. 123, Jakarta
+                hello@udtrisnaputra.com<br>
+                (0361) 9004486<br>
+                Dalung Permai Blok WW No.59, Lingkungan Tegal Sari.
             </div>
         </div>
         <div class="header-right">
@@ -148,7 +148,7 @@
 
 {{-- Footer --}}
 <div class="footer">
-    Thank you for your purchase! Questions? Contact hello@miniecommerce.com
+    Terima kasih atas pesanannya! Pertanyaan? Hubungi hello@udtrisnaputra.com
 </div>
 
 </body>

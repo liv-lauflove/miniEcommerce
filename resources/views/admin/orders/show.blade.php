@@ -3,14 +3,14 @@
         <a href="{{ route('admin.orders.index') }}" class="text-gray-400 hover:text-gray-600">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
         </a>
-        <h1 class="text-xl font-bold text-oxford-900">Order {{ $order->invoice_number }}</h1>
+        <h1 class="text-xl font-bold text-chocolate-600">Order {{ $order->invoice_number }}</h1>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div class="lg:col-span-2 space-y-6">
             {{-- Items --}}
             <div class="card p-6">
-                <h2 class="font-semibold text-oxford-900 mb-4">Order Items</h2>
+                <h2 class="font-semibold text-chocolate-600 mb-4">Order Items</h2>
                 <div class="space-y-4">
                     @foreach($order->items as $item)
                         <div class="flex gap-4 items-center">
@@ -20,28 +20,28 @@
                                 @endif
                             </div>
                             <div class="flex-1 min-w-0">
-                                <p class="font-medium text-oxford-900">{{ $item->product?->name ?? 'Product Deleted' }}</p>
+                                <p class="font-medium text-chocolate-600">{{ $item->product?->name ?? 'Product Deleted' }}</p>
                                 <p class="text-sm body-text">{{ $item->quantity }} × {{ $item->formatted_unit_price }}</p>
                             </div>
-                            <p class="font-semibold text-oxford-900">{{ $item->formatted_subtotal }}</p>
+                            <p class="font-semibold text-chocolate-600">{{ $item->formatted_subtotal }}</p>
                         </div>
                     @endforeach
                 </div>
                 <hr class="my-4 border-gray-100">
                 <div class="text-right">
-                    <p class="text-lg font-bold text-oxford-900">Total: {{ $order->formatted_total }}</p>
+                    <p class="text-lg font-bold text-chocolate-600">Total: {{ $order->formatted_total }}</p>
                 </div>
             </div>
 
             {{-- Customer & Address --}}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="card p-6">
-                    <h2 class="font-semibold text-oxford-900 mb-3">Customer</h2>
-                    <p class="font-medium text-oxford-900">{{ $order->user->name }}</p>
+                    <h2 class="font-semibold text-chocolate-600 mb-3">Customer</h2>
+                    <p class="font-medium text-chocolate-600">{{ $order->user->name }}</p>
                     <p class="text-sm body-text">{{ $order->user->email }}</p>
                 </div>
                 <div class="card p-6">
-                    <h2 class="font-semibold text-oxford-900 mb-3">Shipping Address</h2>
+                    <h2 class="font-semibold text-chocolate-600 mb-3">Shipping Address</h2>
                     <p class="text-sm body-text">{{ $order->shipping_address }}</p>
                 </div>
             </div>
@@ -51,7 +51,7 @@
         <div>
             <div class="card p-6 space-y-4 sticky top-6">
                 <div class="flex items-center justify-between">
-                    <h2 class="font-semibold text-oxford-900">Status</h2>
+                    <h2 class="font-semibold text-chocolate-600">Status</h2>
                     <span class="badge-{{ $order->status->color() }}">{{ $order->status->label() }}</span>
                 </div>
 
@@ -69,14 +69,14 @@
                 <hr class="border-gray-100">
 
                 <div class="space-y-2 text-sm body-text">
-                    <p><span class="font-medium text-oxford-900">Payment:</span> {{ ucfirst(str_replace('_', ' ', $order->payment_method)) }}</p>
-                    <p><span class="font-medium text-oxford-900">Date:</span> {{ $order->created_at->format('M d, Y H:i') }}</p>
-                    <p><span class="font-medium text-oxford-900">Items:</span> {{ $order->items->count() }}</p>
+                    <p><span class="font-medium text-chocolate-600">Payment:</span> {{ ucfirst(str_replace('_', ' ', $order->payment_method)) }}</p>
+                    <p><span class="font-medium text-chocolate-600">Date:</span> {{ $order->created_at->format('M d, Y H:i') }}</p>
+                    <p><span class="font-medium text-chocolate-600">Items:</span> {{ $order->items->count() }}</p>
                 </div>
 
                 @if($order->notes)
                     <div>
-                        <p class="text-sm font-medium text-oxford-900 mb-1">Notes</p>
+                        <p class="text-sm font-medium text-chocolate-600 mb-1">Notes</p>
                         <p class="text-sm body-text">{{ $order->notes }}</p>
                     </div>
                 @endif

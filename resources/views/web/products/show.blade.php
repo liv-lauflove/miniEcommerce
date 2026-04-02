@@ -2,12 +2,12 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {{-- Breadcrumb --}}
         <nav class="flex items-center gap-2 text-sm body-text mb-8">
-            <a href="{{ route('home') }}" class="hover:text-oxford-600">Home</a>
+            <a href="{{ route('home') }}" class="hover:text-chocolate-500">Home</a>
             <span>/</span>
-            <a href="{{ route('shop') }}" class="hover:text-oxford-600">Shop</a>
+            <a href="{{ route('shop') }}" class="hover:text-chocolate-500">Shop</a>
             <span>/</span>
             @if($product->category)
-                <a href="{{ route('shop', ['category' => $product->category->id]) }}" class="hover:text-oxford-600">{{ $product->category->name }}</a>
+                <a href="{{ route('shop', ['category' => $product->category->id]) }}" class="hover:text-chocolate-500">{{ $product->category->name }}</a>
                 <span>/</span>
             @endif
             <span class="text-gray-900">{{ $product->name }}</span>
@@ -30,11 +30,11 @@
             {{-- Info --}}
             <div>
                 @if($product->category)
-                    <span class="badge-tan mb-4 inline-block">{{ $product->category->name }}</span>
+                    <span class="badge-cream mb-4 inline-block">{{ $product->category->name }}</span>
                 @endif
-                <h1 class="text-2xl md:text-3xl font-bold text-oxford-900 mb-4">{{ $product->name }}</h1>
+                <h1 class="text-2xl md:text-3xl font-bold text-chocolate-600 mb-4">{{ $product->name }}</h1>
 
-                <div class="text-3xl font-bold text-oxford-900 mb-6">{{ $product->formatted_price }}</div>
+                <div class="text-3xl font-bold text-chocolate-600 mb-6">{{ $product->formatted_price }}</div>
 
                 {{-- Stock --}}
                 @if($product->stock > 0)
@@ -73,7 +73,7 @@
 
                 <div class="card p-4 text-sm">
                     <div class="flex items-center gap-3">
-                        <svg class="w-5 h-5 text-oxford-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
+                        <svg class="w-5 h-5 text-chocolate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
                         <span class="body-text">Free shipping on orders over Rp 500.000</span>
                     </div>
                 </div>

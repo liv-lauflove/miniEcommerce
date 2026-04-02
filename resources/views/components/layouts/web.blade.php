@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ $title ?? config('app.name') }} — MiniCommerce</title>
+    <title>{{ $title ?? config('app.name') }} — UD Trisna Putra</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700&display=swap" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -18,10 +18,10 @@
             <div class="flex justify-between items-center h-16">
                 {{-- Logo --}}
                 <a href="{{ route('home') }}" class="flex items-center gap-2">
-                    <div class="w-8 h-8 bg-oxford-500 rounded-lg flex items-center justify-center">
-                        <span class="text-white font-bold text-sm">M</span>
+                    <div class="w-8 h-8 bg-chocolate-500 rounded-lg flex items-center justify-center">
+                        <span class="text-white font-bold text-[10px]">TP</span>
                     </div>
-                    <span class="text-oxford-900 font-bold text-lg tracking-tight">MiniCommerce</span>
+                    <span class="text-chocolate-600 font-bold text-lg tracking-tight">UD Trisna Putra</span>
                 </a>
 
                 {{-- Desktop Nav --}}
@@ -34,11 +34,11 @@
                 <div class="flex items-center gap-4">
                     {{-- Cart --}}
                     <a href="{{ route('cart.index') }}" class="relative p-2 rounded-lg hover:bg-gray-100 transition-colors group" title="Cart">
-                        <svg class="w-5 h-5 text-gray-600 group-hover:text-oxford-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-5 h-5 text-gray-600 group-hover:text-chocolate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z"/>
                         </svg>
                         @if($cartCount = \App\Services\CartService::new()->count())
-                            <span class="absolute -top-1 -right-1 w-4 h-4 bg-tan-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">{{ $cartCount > 9 ? '9+' : $cartCount }}</span>
+                            <span class="absolute -top-1 -right-1 w-4 h-4 bg-cream-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center">{{ $cartCount > 9 ? '9+' : $cartCount }}</span>
                         @endif
                     </a>
 
@@ -46,8 +46,8 @@
                         <a href="{{ route('orders.index') }}" class="hidden md:block nav-link {{ request()->routeIs('orders.*') ? 'nav-link-active' : '' }}">Orders</a>
                         <div class="relative" x-data="{ open: false }">
                             <button @click="open = !open" class="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-100 transition-colors">
-                                <div class="w-8 h-8 bg-oxford-100 rounded-full flex items-center justify-center">
-                                    <span class="text-oxford-600 font-semibold text-sm">{{ substr(Auth::user()->name, 0, 1) }}</span>
+                                <div class="w-8 h-8 bg-chocolate-100 rounded-full flex items-center justify-center">
+                                    <span class="text-chocolate-500 font-semibold text-sm">{{ substr(Auth::user()->name, 0, 1) }}</span>
                                 </div>
                                 <span class="hidden md:block text-sm text-gray-700">{{ Auth::user()->name }}</span>
                             </button>
@@ -55,7 +55,7 @@
                                 x-on:click.away="open = false">
                                 <a href="{{ route('orders.index') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">My Orders</a>
                                 @if(Auth::user()->isAdmin())
-                                    <a href="{{ route('admin.index') }}" class="block px-4 py-2 text-sm text-oxford-600 font-medium hover:bg-gray-50">Admin Panel</a>
+                                    <a href="{{ route('admin.index') }}" class="block px-4 py-2 text-sm text-chocolate-500 font-medium hover:bg-gray-50">Admin Panel</a>
                                 @endif
                                 <hr class="my-1 border-gray-100">
                                 <form method="POST" action="{{ route('logout') }}">
@@ -102,39 +102,39 @@
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
                     <div class="flex items-center gap-2 mb-4">
-                        <div class="w-8 h-8 bg-oxford-500 rounded-lg flex items-center justify-center">
-                            <span class="text-white font-bold text-sm">M</span>
+                        <div class="w-8 h-8 bg-chocolate-500 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-[10px]">TP</span>
                         </div>
-                        <span class="text-oxford-900 font-bold text-lg">MiniCommerce</span>
+                        <span class="text-chocolate-600 font-bold text-lg">UD Trisna Putra</span>
                     </div>
-                    <p class="body-text text-sm">Your trusted online store for quality products at the best prices.</p>
+                    <p class="body-text text-sm">Supplier terpercaya bahan baku roti berkualitas tinggi.</p>
                 </div>
                 <div>
-                    <h4 class="font-semibold text-oxford-900 mb-4">Shop</h4>
+                    <h4 class="font-semibold text-chocolate-600 mb-4">Shop</h4>
                     <ul class="space-y-2 text-sm body-text">
-                        <li><a href="{{ route('shop') }}" class="hover:text-oxford-600 transition-colors">All Products</a></li>
+                        <li><a href="{{ route('shop') }}" class="hover:text-chocolate-500 transition-colors">All Products</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-semibold text-oxford-900 mb-4">Account</h4>
+                    <h4 class="font-semibold text-chocolate-600 mb-4">Account</h4>
                     <ul class="space-y-2 text-sm body-text">
                         @auth
-                            <li><a href="{{ route('orders.index') }}" class="hover:text-oxford-600 transition-colors">My Orders</a></li>
+                            <li><a href="{{ route('orders.index') }}" class="hover:text-chocolate-500 transition-colors">My Orders</a></li>
                         @else
-                            <li><a href="{{ route('login') }}" class="hover:text-oxford-600 transition-colors">Sign In</a></li>
+                            <li><a href="{{ route('login') }}" class="hover:text-chocolate-500 transition-colors">Sign In</a></li>
                         @endauth
                     </ul>
                 </div>
                 <div>
-                    <h4 class="font-semibold text-oxford-900 mb-4">Contact</h4>
+                    <h4 class="font-semibold text-chocolate-600 mb-4">Contact</h4>
                     <ul class="space-y-2 text-sm body-text">
-                        <li>hello@miniecommerce.com</li>
-                        <li>+62 21 1234 5678</li>
+                        <li>hello@udtrisnaputra.com</li>
+                        <li>(0361) 9004486</li>
                     </ul>
                 </div>
             </div>
             <div class="border-t border-gray-100 mt-8 pt-8 text-center text-sm muted-text">
-                &copy; {{ date('Y') }} MiniCommerce. All rights reserved.
+                &copy; {{ date('Y') }} UD Trisna Putra. All rights reserved.
             </div>
         </div>
     </footer>

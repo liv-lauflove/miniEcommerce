@@ -25,11 +25,11 @@
         {{-- Info --}}
         <div class="p-4">
             @if($product->category)
-                <p class="text-xs text-tan-600 font-medium uppercase tracking-wider mb-1">{{ $product->category->name }}</p>
+                <p class="text-xs text-chocolate-600 font-medium uppercase tracking-wider mb-1">{{ $product->category->name }}</p>
             @endif
-            <h3 class="font-medium text-oxford-900 group-hover:text-oxford-600 transition-colors line-clamp-2 text-sm mb-2">{{ $product->name }}</h3>
+            <h3 class="font-medium text-chocolate-600 group-hover:text-chocolate-500 transition-colors line-clamp-2 text-sm mb-2">{{ $product->name }}</h3>
             <div class="flex items-center justify-between">
-                <span class="text-oxford-900 font-bold">{{ $product->formatted_price }}</span>
+                <span class="text-chocolate-600 font-bold">{{ $product->formatted_price }}</span>
                 @if($product->stock > 0)
                     <span class="text-xs text-green-600 font-medium">In Stock</span>
                 @endif

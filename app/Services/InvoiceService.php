@@ -3,27 +3,28 @@
 namespace App\Services;
 
 use App\Models\Order;
-use Barryvdh\DomPDF\Facade\Pdf;
+use Barryvdh\DomPDF\Facade\Pdf as PdfFacade;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Support\Facades\Mail;
 
 class InvoiceService
 {
-    public function generatePdf(Order $order): \Barryvdh\DomPDF\Facade\Pdf
+    public function generatePdf(Order $order): PDF
     {
         $order->load(['user', 'items.product']);
 
-        return Pdf::loadView('web.orders.invoice-pdf', [
+        return PdfFacade::loadView('web.orders.invoice-pdf', [
             'order' => $order,
             'company' => [
                 'name' => config('app.name'),
-                'address' => 'Jl. Sudirman No. 123, Jakarta',
-                'phone' => '+62 21 1234 5678',
-                'email' => 'hello@miniecommerce.com',
+                'address' => 'Dalung Permai Blok WW No.59, Lingkungan Tegal Sari.',
+                'phone' => '(0361) 9004486',
+                'email' => 'hello@udtrisnaputra.com',
             ],
         ]);
     }
 
-    public function downloadPdf(Order $order): \Symfony\Component\HttpFoundation\StreamedResponse
+    public function downloadPdf(Order $order): \Illuminate\Http\Response
     {
         $pdf = $this->generatePdf($order);
 
