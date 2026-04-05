@@ -24,9 +24,24 @@ class OrderService
                 throw new \Exception('Cart is empty.');
             }
 
-            $stockErrors = $this->cartService->validateStock();
-            if (!empty($stockErrors)) {
-                throw new \Exception('Some items in your cart have insufficient stock.');
+            $productIds = $cartItems->pluck('product_id')->toArray();
+
+            // Lock product rows to prevent race-condition overselling
+            $products = Product::whereIn('id', $productIds)
+                ->lockForUpdate()
+                ->get()
+                ->keyBy('id');
+
+            // Re-validate stock within the lock
+            foreach ($cartItems as $item) {
+                $product = $products->get($item['product_id']);
+                if (!$product || $product->stock < $item['quantity']) {
+                    throw new \Exception(
+                        $product
+                            ? "Insufficient stock for '{$product->name}'."
+                            : 'One or more products are no longer available.'
+                    );
+                }
             }
 
             $totalAmount = $cartItems->sum('subtotal');
@@ -52,7 +67,7 @@ class OrderService
                     'unit_price' => $item['price'],
                 ]);
 
-                Product::find($item['product_id'])->decrementStock($item['quantity']);
+                $products->get($item['product_id'])->decrement('stock', $item['quantity']);
             }
 
             $this->cartService->clear();

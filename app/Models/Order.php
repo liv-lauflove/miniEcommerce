@@ -63,8 +63,23 @@ class Order extends Model
     public static function generateInvoiceNumber(): string
     {
         $prefix = 'INV-' . date('Ymd');
-        $lastOrder = self::whereDate('created_at', today())->latest('id')->first();
-        $sequence = $lastOrder ? ((int) substr($lastOrder->invoice_number, -4)) + 1 : 1;
-        return $prefix . '-' . str_pad($sequence, 4, '0', STR_PAD_LEFT);
+        $maxAttempts = 5;
+
+        for ($i = 0; $i < $maxAttempts; $i++) {
+            $lastOrder = self::whereDate('created_at', today())
+                ->where('invoice_number', 'like', $prefix . '-%')
+                ->lockForUpdate()
+                ->latest('id')
+                ->first();
+
+            $sequence = $lastOrder ? ((int) substr($lastOrder->invoice_number, -4)) + 1 : 1;
+            $invoiceNumber = $prefix . '-' . str_pad($sequence, 4, '0', STR_PAD_LEFT);
+
+            if (!self::where('invoice_number', $invoiceNumber)->exists()) {
+                return $invoiceNumber;
+            }
+        }
+
+        throw new \RuntimeException('Failed to generate unique invoice number.');
     }
 }

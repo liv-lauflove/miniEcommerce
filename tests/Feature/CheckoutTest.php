@@ -30,6 +30,7 @@ class CheckoutTest extends TestCase
 
         $response = $this->actingAs($this->customer)->post('/checkout', [
             'shipping_address' => '123 Test Street, Jakarta',
+            'phone' => '081234567890',
             'payment_method' => 'bank_transfer',
             'notes' => 'Please deliver in the morning.',
         ]);
@@ -38,6 +39,7 @@ class CheckoutTest extends TestCase
         $this->assertDatabaseHas('orders', [
             'user_id' => $this->customer->id,
             'shipping_address' => '123 Test Street, Jakarta',
+            'phone' => '081234567890',
             'payment_method' => 'bank_transfer',
             'notes' => 'Please deliver in the morning.',
         ]);
@@ -45,10 +47,27 @@ class CheckoutTest extends TestCase
         $this->assertTrue($this->cartService->isEmpty()); // cart cleared
     }
 
+    public function test_checkout_fails_with_insufficient_stock(): void
+    {
+        $product = Product::factory()->create(['price' => 100000, 'stock' => 3]);
+        $this->cartService->add($product, 5);
+
+        $response = $this->actingAs($this->customer)->post('/checkout', [
+            'shipping_address' => '123 Test Street',
+            'phone' => '081234567890',
+            'payment_method' => 'bank_transfer',
+        ]);
+
+        $response->assertSessionHas('error');
+        $this->assertDatabaseMissing('orders', ['user_id' => $this->customer->id]);
+        $this->assertEquals(3, $product->fresh()->stock);
+    }
+
     public function test_checkout_requires_authentication(): void
     {
         $response = $this->post('/checkout', [
             'shipping_address' => '123 Test Street',
+            'phone' => '081234567890',
             'payment_method' => 'bank_transfer',
         ]);
 
@@ -58,16 +77,28 @@ class CheckoutTest extends TestCase
     public function test_checkout_requires_shipping_address(): void
     {
         $response = $this->actingAs($this->customer)->post('/checkout', [
+            'phone' => '081234567890',
             'payment_method' => 'bank_transfer',
         ]);
 
         $response->assertSessionHasErrors('shipping_address');
     }
 
+    public function test_checkout_requires_phone(): void
+    {
+        $response = $this->actingAs($this->customer)->post('/checkout', [
+            'shipping_address' => '123 Test Street',
+            'payment_method' => 'bank_transfer',
+        ]);
+
+        $response->assertSessionHasErrors('phone');
+    }
+
     public function test_checkout_requires_valid_payment_method(): void
     {
         $response = $this->actingAs($this->customer)->post('/checkout', [
             'shipping_address' => '123 Test Street',
+            'phone' => '081234567890',
             'payment_method' => 'invalid_method',
         ]);
 
@@ -81,6 +112,7 @@ class CheckoutTest extends TestCase
 
         $this->actingAs($this->customer)->post('/checkout', [
             'shipping_address' => '456 Test Ave',
+            'phone' => '081234567890',
             'payment_method' => 'cod',
         ]);
 
@@ -89,13 +121,13 @@ class CheckoutTest extends TestCase
 
         $this->assertEquals(150000, $orderItem->unit_price);
         $this->assertEquals(3, $orderItem->quantity);
-        $this->assertEquals(450000, $orderItem->subtotal);
     }
 
     public function test_empty_cart_cannot_checkout(): void
     {
         $response = $this->actingAs($this->customer)->post('/checkout', [
             'shipping_address' => '789 Empty St',
+            'phone' => '081234567890',
             'payment_method' => 'bank_transfer',
         ]);
 

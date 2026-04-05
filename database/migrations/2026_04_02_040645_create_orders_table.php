@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('status')->default('pending');
             $table->decimal('total_amount', 10, 2);
             $table->text('shipping_address');
+            $table->string('phone', 20)->nullable();
             $table->string('payment_method');
             $table->text('notes')->nullable();
             $table->timestamp('invoice_date')->nullable();

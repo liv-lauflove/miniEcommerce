@@ -16,10 +16,10 @@ class InvoiceService
         return PdfFacade::loadView('web.orders.invoice-pdf', [
             'order' => $order,
             'company' => [
-                'name' => config('app.name'),
-                'address' => 'Dalung Permai Blok WW No.59, Lingkungan Tegal Sari.',
-                'phone' => '(0361) 9004486',
-                'email' => 'hello@udtrisnaputra.com',
+                'name'    => config('company.name'),
+                'address' => config('company.address'),
+                'phone'   => config('company.phone'),
+                'email'   => config('company.email'),
             ],
         ]);
     }
