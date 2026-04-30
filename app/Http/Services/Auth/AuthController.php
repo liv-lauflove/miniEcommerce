@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Services\Auth;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +13,7 @@ class AuthController extends Controller
     // Membuka halaman register
     public function showRegister()
     {
-        return view('register');
+        return view('auth.register');
     }
 
     // Memproses data saat tombol daftar diklik
@@ -20,14 +21,14 @@ class AuthController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'no_hp' => 'required|string|unique:users,no_hp', // Nomor HP tidak boleh kembar
-            'password' => 'required|string|min:6', // Password minimal 6 huruf
+            'no_hp' => 'required|string|max:20|unique:users,no_hp',
+            'password' => 'required|string|min:6',
         ]);
 
         User::create([
             'name' => $request->name,
             'no_hp' => $request->no_hp,
-            'password' => Hash::make($request->password), // Password disandikan/diacak
+            'password' => Hash::make($request->password),
         ]);
 
         return redirect('/login')->with('success', 'Registrasi berhasil! Silakan login.');
@@ -36,35 +37,43 @@ class AuthController extends Controller
     // Membuka halaman login
     public function showLogin()
     {
-        return view('login');
+        return view('auth.login');
     }
 
     // Memproses saat tombol login diklik
     public function login(Request $request)
     {
-        $credentials = $request->validate([
+        $request->validate([
             'no_hp' => 'required|string',
             'password' => 'required|string',
         ]);
 
-        // Mengecek apakah nomor hp dan password cocok dengan database
+        $credentials = [
+            'no_hp' => $request->no_hp,
+            'password' => $request->password,
+        ];
+
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate(); // Buat sesi login
-            return redirect()->intended('/dashboard'); // Pindah ke halaman dalam
+            $request->session()->regenerate();
+
+            return redirect()->intended('/dashboard');
         }
 
-        // Jika salah, tendang balik ke login dan kasih pesan error
-        return back()->withErrors([
-            'no_hp' => 'Nomor HP atau password salah.',
-        ]);
+        return back()
+            ->withErrors([
+                'no_hp' => 'Nomor HP atau password salah.',
+            ])
+            ->onlyInput('no_hp');
     }
 
     // Memproses tombol logout
     public function logout(Request $request)
     {
         Auth::logout();
+
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+
         return redirect('/login');
     }
 }
