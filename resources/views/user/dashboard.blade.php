@@ -2,3 +2,5 @@
     @csrf
     <button type="submit">Keluar (Logout)</button>
 </form>
+
+<h1>ini halaman users</h1>
