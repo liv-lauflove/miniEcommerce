@@ -1,34 +1,54 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Services\Auth\AuthController; 
-use App\Http\Controllers\OrderController;
+use App\Http\Services\Auth\AuthController;
+use App\Http\Services\Admin\ProductController;
 
-Route::middleware('guest')->group(function () {
-    Route::get('/register', [AuthController::class, 'showRegister']);
-    Route::post('/register', [AuthController::class, 'register']);
-    
-    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-    Route::post('/login', [AuthController::class, 'login']);
+// ROOT
+Route::get('/', function () {
+    if (auth()->check()) {
+        return redirect()->route('dashboard');
+    }
+
+    return redirect()->route('login');
 });
 
+
+// ROUTE UNTUK USER YANG BELUM LOGIN
+Route::middleware('guest')->group(function () {
+    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+    Route::post('/register', [AuthController::class, 'register'])->name('register.process');
+
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login'])->name('login.process');
+});
+
+
+// ROUTE UNTUK USER YANG SUDAH LOGIN
 Route::middleware('auth')->group(function () {
-    
-    // 1. Rute Customer
+
+    // LOGOUT
+    // Cukup satu saja, jangan dobel.
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+    // 1. ROUTE CUSTOMER / USER
     Route::get('/user/dashboard', function () {
         return view('user.dashboard');
-    });
-    Route::get('/profile', [OrderController::class, 'profile'])->name('profile');
+    })->name('user.dashboard');
 
-    // 2. Rute Karyawan (Admin)
-    Route::get('/admin/dashboard', function () {
+    // 2. ROUTE KARYAWAN / ADMIN
+    Route::get('/dashboard', function () {
         return view('admin.dashboard');
+    })->name('dashboard');
+
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::resource('products', ProductController::class);
     });
 
-    // 3. Rute Owner (Super Admin)
+
+    // 3. ROUTE OWNER / SUPER ADMIN
     Route::get('/owner/dashboard', function () {
         return view('owner.dashboard');
-    });
-    
-    Route::post('/logout', [AuthController::class, 'logout']);
+    })->name('owner.dashboard');
 });
