@@ -22,6 +22,10 @@
                         Produk
                     </a>
 
+                    <a href="{{ route('admin.categories.index') }}" class="text-sm font-semibold text-gray-700 hover:text-red-600">
+                        Kategori
+                    </a>
+
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
                         <button type="submit" class="rounded-lg bg-red-600 px-4 py-2 text-sm font-bold text-white hover:bg-red-700">

@@ -9,6 +9,10 @@
             <a href="{{ route('admin.products.index') }}" class="inline-flex rounded-xl bg-yellow-400 px-5 py-3 font-bold text-gray-900 hover:bg-yellow-300">
                 Kelola Katalog Produk
             </a>
+
+            <a href="{{ route('admin.categories.index') }}" class="inline-flex rounded-xl bg-green-700 px-5 py-3 font-bold text-white hover:bg-green-800">
+                Kelola Kategori
+            </a>
         </div>
     </div>
 @endsection

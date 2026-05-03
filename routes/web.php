@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Services\Auth\AuthController;
 use App\Http\Services\Admin\ProductController;
+use App\Http\Services\Admin\CategoryController;
 
 // ROOT
 Route::get('/', function () {
@@ -44,6 +45,9 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('products', ProductController::class);
+
+        Route::resource('categories', CategoryController::class)
+            ->except(['create', 'show']);
     });
 
 
