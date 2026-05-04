@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Services\Auth\AuthController;
 use App\Http\Services\Admin\ProductController;
 use App\Http\Services\Admin\CategoryController;
+use App\Http\Services\User\CatalogController;
+use App\Http\Services\User\CartController;
 
 // ROOT
 Route::get('/', function () {
@@ -14,6 +16,10 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
+// CUSTOMER PUBLIC ROUTES
+Route::get('/', [CatalogController::class, 'home'])->name('home');
+Route::get('/categories', [CatalogController::class, 'categories'])->name('categories.index');
+Route::get('/products/{product}', [CatalogController::class, 'show'])->name('products.show');
 
 // ROUTE UNTUK USER YANG BELUM LOGIN
 Route::middleware('guest')->group(function () {
@@ -32,6 +38,11 @@ Route::middleware('auth')->group(function () {
     // Cukup satu saja, jangan dobel.
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+    // CUSTOMER CART
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/{product}', [CartController::class, 'store'])->name('cart.store');
+    Route::patch('/cart/{product}', [CartController::class, 'update'])->name('cart.update');
+    Route::delete('/cart/{product}', [CartController::class, 'destroy'])->name('cart.destroy');
 
     // 1. ROUTE CUSTOMER / USER
     Route::get('/user/dashboard', function () {
