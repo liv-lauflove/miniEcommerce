@@ -6,6 +6,7 @@ use App\Http\Services\Admin\ProductController;
 use App\Http\Services\Admin\CategoryController;
 use App\Http\Services\User\CatalogController;
 use App\Http\Services\User\CartController;
+use App\Http\Services\User\CheckoutController;
 
 // ROOT
 Route::get('/', function () {
@@ -43,6 +44,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/cart/{product}', [CartController::class, 'store'])->name('cart.store');
     Route::patch('/cart/{product}', [CartController::class, 'update'])->name('cart.update');
     Route::delete('/cart/{product}', [CartController::class, 'destroy'])->name('cart.destroy');
+
+    // CHECKOUT
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+    Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+    Route::post('/checkout/validate-location', [CheckoutController::class, 'validateLocation'])->name('checkout.validate-location');
 
     // 1. ROUTE CUSTOMER / USER
     Route::get('/user/dashboard', function () {

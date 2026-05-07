@@ -110,13 +110,12 @@
                         Minimum order dan validasi jarak maksimal 5 km akan dilakukan di halaman checkout.
                     </div>
 
-                    <button
-                        type="button"
-                        disabled
-                        class="w-full cursor-not-allowed rounded-2xl bg-gray-300 px-6 py-3 font-black text-white"
+                    <a
+                        href="{{ route('checkout.index') }}"
+                        class="w-full rounded-2xl bg-emerald-600 px-6 py-3 font-black text-white text-center hover:bg-emerald-700 transition-colors"
                     >
-                        Checkout — Next Module
-                    </button>
+                        Checkout
+                    </a>
                 </div>
             </aside>
         </div>

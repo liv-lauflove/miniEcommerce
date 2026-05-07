@@ -246,5 +246,7 @@
             clearTimeout(loginToastTimer);
         }
     </script>
+
+    @stack('scripts')
 </body>
 </html>
