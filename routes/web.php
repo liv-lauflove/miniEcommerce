@@ -8,14 +8,6 @@ use App\Http\Services\User\CatalogController;
 use App\Http\Services\User\CartController;
 use App\Http\Services\User\CheckoutController;
 
-// ROOT
-Route::get('/', function () {
-    if (auth()->check()) {
-        return redirect()->route('dashboard');
-    }
-
-    return redirect()->route('login');
-});
 
 // CUSTOMER PUBLIC ROUTES
 Route::get('/', [CatalogController::class, 'home'])->name('home');
@@ -49,6 +41,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
     Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
     Route::post('/checkout/validate-location', [CheckoutController::class, 'validateLocation'])->name('checkout.validate-location');
+
+    // CHECKOUT SUCCESS
+    Route::get('/checkout/success/{order}', function ($order) {
+
+        $order = \App\Models\Order::findOrFail($order);
+
+        return view('customer.checkout.success', compact('order'));
+
+    })->name('checkout.success');
 
     // 1. ROUTE CUSTOMER / USER
     Route::get('/user/dashboard', function () {
