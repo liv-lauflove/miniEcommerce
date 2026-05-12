@@ -26,7 +26,7 @@
                             <label class="block text-sm font-medium text-gray-700 mb-1">Nama Penerima</label>
                             <input type="text" name="recipient_name" required
                                    value="{{ old('recipient_name') }}"
-                                   class="w-full rounded-xl border-gray-300 focus:border-emerald-500 focus:ring-emerald-500 @error('recipient_name') border-red-500 @enderror">
+                                   class="relative z-10 w-full rounded-xl border-gray-300 focus:border-emerald-500 focus:ring-emerald-500 @error('recipient_name') border-red-500 @enderror">
                             @error('recipient_name')
                                 <p class="text-red-500 text-sm">{{ $message }}</p>
                             @enderror
@@ -36,7 +36,7 @@
                             <label class="block text-sm font-medium text-gray-700 mb-1">No. HP</label>
                             <input type="tel" name="recipient_phone" required
                                    value="{{ old('recipient_phone') }}"
-                                   class="w-full rounded-xl border-gray-300 focus:border-emerald-500 focus:ring-emerald-500 @error('recipient_phone') border-red-500 @enderror">
+                                  class="relative z-10 w-full rounded-xl border-gray-300 focus:border-emerald-500 focus:ring-emerald-500 @error('recipient_name') border-red-500 @enderror">
                             @error('recipient_phone')
                                 <p class="text-red-500 text-sm">{{ $message }}</p>
                             @enderror
@@ -46,7 +46,7 @@
                             <label class="block text-sm font-medium text-gray-700 mb-1">Patokan Lokasi (Opsional)</label>
                             <input type="text" name="address_note" placeholder="Contoh: Dekat swalayan, lampu merah..."
                                    value="{{ old('address_note') }}"
-                                   class="w-full rounded-xl border-gray-300 focus:border-emerald-500 focus:ring-emerald-500">
+                                   class="relative z-10 w-full rounded-xl border-gray-300 focus:border-emerald-500 focus:ring-emerald-500 @error('recipient_name') border-red-500 @enderror">
                         </div>
                     </div>
                 </div>

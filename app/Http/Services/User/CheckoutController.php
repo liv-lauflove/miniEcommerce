@@ -100,6 +100,18 @@ class CheckoutController extends Controller
             ]);
 
             foreach ($cartItems as $item) {
+
+                // VALIDASI STOK
+                if ($item['quantity'] > $item['product']->stock) {
+
+                    DB::rollBack();
+
+                    return back()->with(
+                        'error',
+                        'Stok produk ' . $item['product']->name . ' tidak mencukupi.'
+                    );
+                }
+
                 OrderItem::create([
                     'order_id' => $order->id,
                     'product_id' => $item['product']->id,
@@ -107,13 +119,16 @@ class CheckoutController extends Controller
                     'price' => $item['product']->price,
                     'subtotal' => $item['product']->price * $item['quantity'],
                 ]);
+
+                // Kurangi stok otomatis
+                $item['product']->decrement('stock', $item['quantity']);
             }
 
             DB::commit();
             session()->forget('cart');
 
-            return redirect()->route('home')
-                ->with('success', 'Pesanan berhasil dibuat! Kami akan menghubungi Anda untuk konfirmasi.');
+            return redirect()->route('checkout.success', $order->id)
+                ->with('success', 'Pesanan berhasil dibuat!');
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('error', 'Terjadi kesalahan. Silakan coba lagi.')
