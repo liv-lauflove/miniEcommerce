@@ -4,8 +4,8 @@ namespace App\Services;
 
 class DistanceService
 {
-    private float $storeLat;
-    private float $storeLng;
+    private ?float $storeLat = null;
+    private ?float $storeLng = null;
 
     public function __construct(?float $storeLat = null, ?float $storeLng = null)
     {
@@ -13,8 +13,11 @@ class DistanceService
         $this->storeLng = $storeLng ?? config('store.longitude');
 
         if ($this->storeLat === null || $this->storeLng === null) {
-            throw new \RuntimeException('Store coordinates not configured. Set STORE_LAT and STORE_LNG in .env');
+            throw new \RuntimeException('Store coordinates not configured. Set STORE_LATITUDE and STORE_LONGITUDE in .env');
         }
+
+        $this->storeLat = (float) $this->storeLat;
+        $this->storeLng = (float) $this->storeLng;
     }
 
     /**
@@ -25,7 +28,7 @@ class DistanceService
     {
         $this->validateCoordinates($lat, $lng);
 
-        $earthRadius = 6371; // Earth's radius in km
+        $earthRadius = 6371;
 
         $latFrom = deg2rad($this->storeLat);
         $lngFrom = deg2rad($this->storeLng);
@@ -37,6 +40,7 @@ class DistanceService
 
         $a = sin($latDelta / 2) ** 2 +
              cos($latFrom) * cos($latTo) * sin($lngDelta / 2) ** 2;
+
         $c = 2 * asin(sqrt($a));
 
         return round($earthRadius * $c, 2);
@@ -56,6 +60,7 @@ class DistanceService
         if ($lat < -90 || $lat > 90) {
             throw new \InvalidArgumentException('Invalid latitude: must be between -90 and 90');
         }
+
         if ($lng < -180 || $lng > 180) {
             throw new \InvalidArgumentException('Invalid longitude: must be between -180 and 180');
         }
