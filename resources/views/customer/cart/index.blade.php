@@ -106,13 +106,22 @@
                         </span>
                     </div>
 
-                    <div class="rounded-2xl bg-yellow-50 p-4 text-sm leading-6 text-gray-700">
-                        Minimum order dan validasi jarak maksimal 5 km akan dilakukan di halaman checkout.
-                    </div>
-
+                    <div class="mt-6">
                     <a
                         href="{{ route('checkout.index') }}"
-                        class="w-full rounded-2xl bg-emerald-600 px-6 py-3 font-black text-white text-center hover:bg-emerald-700 transition-colors"
+                        style="
+                            display:block;
+                            width:100%;
+                            background:#059669;
+                            color:white;
+                            padding:16px;
+                            text-align:center;
+                            border-radius:16px;
+                            font-weight:700;
+                            text-decoration:none;
+                            position:relative;
+                            z-index:9999;
+                        "
                     >
                         Checkout
                     </a>

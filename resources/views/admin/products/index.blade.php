@@ -1,4 +1,4 @@
-@extends('admin.layout')
+font@extends('admin.layout')
 
 @section('content')
     <div class="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
