@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Services\Auth\AuthController;
 use App\Http\Services\Admin\ProductController;
 use App\Http\Services\Admin\CategoryController;
+use App\Http\Services\Admin\OrderController;
 use App\Http\Services\User\CatalogController;
 use App\Http\Services\User\CartController;
 use App\Http\Services\User\CheckoutController;
@@ -66,6 +67,11 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('categories', CategoryController::class)
             ->except(['create', 'show']);
+
+        Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
+        Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+        Route::post('orders/{order}/accept', [OrderController::class, 'accept'])->name('orders.accept');
+        Route::patch('orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
     });
 
 
