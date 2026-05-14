@@ -18,6 +18,10 @@
                 </div>
 
                 <div class="flex items-center gap-4">
+                    <a href="{{ route('admin.orders.index') }}" class="text-sm font-semibold text-gray-700 hover:text-red-600">
+                        Pesanan
+                    </a>
+
                     <a href="{{ route('admin.products.index') }}" class="text-sm font-semibold text-gray-700 hover:text-red-600">
                         Produk
                     </a>
