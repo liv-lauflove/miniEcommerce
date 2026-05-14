@@ -5,6 +5,7 @@ use App\Http\Services\Auth\AuthController;
 use App\Http\Services\Admin\ProductController;
 use App\Http\Services\Admin\CategoryController;
 use App\Http\Services\Admin\OrderController;
+use App\Http\Services\Owner\DashboardController as OwnerDashboardController;
 use App\Http\Services\User\CatalogController;
 use App\Http\Services\User\CartController;
 use App\Http\Services\User\CheckoutController;
@@ -76,7 +77,7 @@ Route::middleware('auth')->group(function () {
 
 
     // 3. ROUTE OWNER / SUPER ADMIN
-    Route::get('/owner/dashboard', function () {
-        return view('owner.dashboard');
-    })->name('owner.dashboard');
+    Route::prefix('owner')->name('owner.')->group(function () {
+        Route::get('dashboard', [OwnerDashboardController::class, 'index'])->name('dashboard');
+    });
 });
