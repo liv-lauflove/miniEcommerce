@@ -45,6 +45,15 @@
                     >
                         Categories
                     </a>
+
+                    @auth
+                        <a
+                            href="{{ route('user.orders.index') }}"
+                            class="{{ request()->routeIs('user.orders.index', 'user.orders.show') ? 'text-red-600' : 'text-slate-500' }} text-sm font-bold transition hover:text-red-600"
+                        >
+                            Pesanan Saya
+                        </a>
+                    @endauth
                 </nav>
 
                 <form action="{{ route('categories.index') }}" method="GET" class="hidden w-full max-w-md items-center rounded-full border border-yellow-100 bg-slate-50 px-4 py-2.5 shadow-inner lg:flex">
@@ -108,6 +117,15 @@
                     >
                         Categories
                     </a>
+
+                    @auth
+                        <a
+                            href="{{ route('user.orders.index') }}"
+                            class="{{ request()->routeIs('user.orders.index', 'user.orders.show') ? 'bg-red-600 text-white' : 'bg-slate-100 text-slate-600' }} whitespace-nowrap rounded-full px-4 py-2 text-sm font-bold"
+                        >
+                            Pesanan
+                        </a>
+                    @endauth
                 </nav>
 
                 <form action="{{ route('categories.index') }}" method="GET" class="flex items-center rounded-full border border-yellow-100 bg-slate-50 px-4 py-2.5">

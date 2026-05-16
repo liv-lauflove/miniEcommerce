@@ -9,6 +9,7 @@ use App\Http\Services\Owner\DashboardController as OwnerDashboardController;
 use App\Http\Services\User\CatalogController;
 use App\Http\Services\User\CartController;
 use App\Http\Services\User\CheckoutController;
+use App\Http\Services\User\OrderController as UserOrderController;
 
 
 // CUSTOMER PUBLIC ROUTES
@@ -58,21 +59,28 @@ Route::middleware('auth')->group(function () {
         return view('user.dashboard');
     })->name('user.dashboard');
 
+    // USER ORDERS
+    Route::prefix('user')->name('user.')->group(function () {
+        Route::get('orders', [UserOrderController::class, 'index'])->name('orders.index');
+        Route::get('orders/{order}', [UserOrderController::class, 'show'])->name('orders.show');
+    });
+
     // 2. ROUTE KARYAWAN / ADMIN
+    Route::prefix('admin')->name('admin.')->group(function () {
+    
     Route::get('/dashboard', function () {
         return view('admin.dashboard');
     })->name('dashboard');
 
-    Route::prefix('admin')->name('admin.')->group(function () {
-        Route::resource('products', ProductController::class);
+    Route::resource('products', ProductController::class);
 
-        Route::resource('categories', CategoryController::class)
-            ->except(['create', 'show']);
+    Route::resource('categories', CategoryController::class)
+        ->except(['create', 'show']);
 
-        Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
-        Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
-        Route::post('orders/{order}/accept', [OrderController::class, 'accept'])->name('orders.accept');
-        Route::patch('orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+    Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    Route::post('orders/{order}/accept', [OrderController::class, 'accept'])->name('orders.accept');
+    Route::patch('orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
     });
 
 
