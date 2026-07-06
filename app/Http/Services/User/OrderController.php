@@ -44,27 +44,27 @@ class OrderController extends Controller
         $badges = [
             'pending' => [
                 'color' => 'bg-gray-100 text-gray-800',
-                'label' => 'Menunggu Konfirmasi'
+                'label' => 'Menunggu Konfirmasi',
             ],
             'diproses' => [
                 'color' => 'bg-blue-100 text-blue-800',
-                'label' => 'Sedang Diproses'
+                'label' => 'Sedang Diproses',
             ],
             'dikirim' => [
                 'color' => 'bg-yellow-100 text-yellow-800',
-                'label' => 'Sedang Dikirim'
+                'label' => 'Sedang Dikirim',
             ],
             'selesai' => [
                 'color' => 'bg-green-100 text-green-800',
-                'label' => 'Selesai'
+                'label' => 'Selesai',
             ],
             'tertunda' => [
                 'color' => 'bg-orange-100 text-orange-800',
-                'label' => 'Tertunda'
+                'label' => 'Tertunda',
             ],
             'dibatalkan' => [
                 'color' => 'bg-red-100 text-red-800',
-                'label' => 'Dibatalkan'
+                'label' => 'Dibatalkan',
             ],
         ];
 

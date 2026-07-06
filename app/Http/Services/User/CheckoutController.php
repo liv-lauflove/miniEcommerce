@@ -5,6 +5,7 @@ namespace App\Http\Services\User;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Product;
 use App\Services\DistanceService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,7 @@ class CheckoutController extends Controller
 
     public function __construct()
     {
-        $this->distanceService = new DistanceService();
+        $this->distanceService = new DistanceService;
     }
 
     public function index()
@@ -56,7 +57,7 @@ class CheckoutController extends Controller
         ]);
 
         // Validate delivery radius
-        if (!$this->distanceService->isWithinRadius(
+        if (! $this->distanceService->isWithinRadius(
             $validated['latitude'],
             $validated['longitude']
         )) {
@@ -64,6 +65,7 @@ class CheckoutController extends Controller
                 $validated['latitude'],
                 $validated['longitude']
             );
+
             return back()->with('error', "Maaf, alamat di luar jangkauan pengantaran ({$distance} km dari toko). Maksimal 5 km.")->withInput();
         }
 
@@ -108,7 +110,7 @@ class CheckoutController extends Controller
 
                     return back()->with(
                         'error',
-                        'Stok produk ' . $item['product']->name . ' tidak mencukupi.'
+                        'Stok produk '.$item['product']->name.' tidak mencukupi.'
                     );
                 }
 
@@ -131,6 +133,7 @@ class CheckoutController extends Controller
                 ->with('success', 'Pesanan berhasil dibuat!');
         } catch (\Exception $e) {
             DB::rollBack();
+
             return back()->with('error', 'Terjadi kesalahan. Silakan coba lagi.')
                 ->withInput();
         }
@@ -159,14 +162,14 @@ class CheckoutController extends Controller
             'max_radius' => config('store.delivery_radius_km'),
             'message' => $isWithinRadius
                 ? "Lokasi dalam jangkauan ({$distance} km)"
-                : "Maaf, alamat di luar jangkauan ({$distance} km). Maksimal " . config('store.delivery_radius_km') . " km.",
+                : "Maaf, alamat di luar jangkauan ({$distance} km). Maksimal ".config('store.delivery_radius_km').' km.',
         ]);
     }
 
     private function getCartItemsWithProducts(array $cart): array
     {
         $productIds = array_keys($cart);
-        $products = \App\Models\Product::whereIn('id', $productIds)->get()->keyBy('id');
+        $products = Product::whereIn('id', $productIds)->get()->keyBy('id');
 
         $cartItems = [];
         foreach ($cart as $productId => $quantity) {
@@ -177,6 +180,7 @@ class CheckoutController extends Controller
                 ];
             }
         }
+
         return $cartItems;
     }
 

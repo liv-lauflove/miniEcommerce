@@ -5,6 +5,7 @@ namespace App\Services;
 class DistanceService
 {
     private ?float $storeLat = null;
+
     private ?float $storeLng = null;
 
     public function __construct(?float $storeLat = null, ?float $storeLng = null)
@@ -52,6 +53,7 @@ class DistanceService
     public function isWithinRadius(float $lat, float $lng, ?float $radiusKm = null): bool
     {
         $radius = $radiusKm ?? config('store.delivery_radius_km', 5);
+
         return $this->calculate($lat, $lng) <= $radius;
     }
 
