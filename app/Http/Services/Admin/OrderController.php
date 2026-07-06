@@ -5,6 +5,8 @@ namespace App\Http\Services\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ActivityLog;
 use App\Models\Order;
+use App\Patterns\Observer\ActivityLogObserver;
+use App\Patterns\Observer\OrderStatusSubject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -64,15 +66,11 @@ class OrderController extends Controller
         $oldStatus = $order->status;
         $order->update(['status' => 'diproses']);
 
-        // Log aktivitas
-        ActivityLog::create([
-            'admin_id' => Auth::id(),
-            'order_id' => $order->id,
-            'action' => 'accept',
-            'old_status' => $oldStatus,
-            'new_status' => 'diproses',
-            'description' => 'Pesanan diterima oleh '.Auth::user()->name,
-        ]);
+        // --- OBSERVER PATTERN ---
+        $subject = new OrderStatusSubject($order);
+        $subject->attach(new ActivityLogObserver);
+        $subject->notify('accept', $oldStatus, 'diproses', Auth::id());
+        // ------------------------
 
         return back()->with('success', 'Pesanan berhasil diterima dan status diubah menjadi "Diproses".');
     }
@@ -103,15 +101,11 @@ class OrderController extends Controller
 
         $order->update(['status' => $validated['status']]);
 
-        // Log aktivitas
-        ActivityLog::create([
-            'admin_id' => Auth::id(),
-            'order_id' => $order->id,
-            'action' => 'update_status',
-            'old_status' => $oldStatus,
-            'new_status' => $validated['status'],
-            'description' => 'Status pesanan diubah dari '.ucfirst($oldStatus).' menjadi '.ucfirst($validated['status']).' oleh '.Auth::user()->name,
-        ]);
+        // --- OBSERVER PATTERN ---
+        $subject = new OrderStatusSubject($order);
+        $subject->attach(new ActivityLogObserver);
+        $subject->notify('update_status', $oldStatus, $validated['status'], Auth::id());
+        // ------------------------
 
         return back()->with('success', 'Status pesanan berhasil diperbarui menjadi '.ucfirst($validated['status']).'.');
     }

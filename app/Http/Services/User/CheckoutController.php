@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
+use App\Patterns\Strategy\BankTransferPayment;
+use App\Patterns\Strategy\CODPayment;
+use App\Patterns\Strategy\PaymentContext;
 use App\Services\DistanceService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -84,6 +87,16 @@ class CheckoutController extends Controller
         $shippingFee = $this->calculateShippingFee($subtotal);
         $grandTotal = $subtotal + $shippingFee;
 
+        // --- STRATEGY PATTERN ---
+        $paymentStrategy = match ($validated['payment_method']) {
+            'transfer' => new BankTransferPayment,
+            'cod' => new CODPayment,
+            default => throw new \InvalidArgumentException('Metode pembayaran tidak valid'),
+        };
+        $paymentContext = new PaymentContext;
+        $paymentContext->setStrategy($paymentStrategy);
+        // ------------------------
+
         DB::beginTransaction();
         try {
             $order = Order::create([
@@ -97,7 +110,7 @@ class CheckoutController extends Controller
                 'subtotal' => $subtotal,
                 'shipping_fee' => $shippingFee,
                 'grand_total' => $grandTotal,
-                'payment_method' => $validated['payment_method'],
+                'payment_method' => $paymentStrategy->getMethodName(),
                 'status' => 'pending',
             ]);
 
@@ -125,6 +138,9 @@ class CheckoutController extends Controller
                 // Kurangi stok otomatis
                 $item['product']->decrement('stock', $item['quantity']);
             }
+
+            // Eksekusi pembayaran melalui strategy
+            $paymentContext->executePayment($order);
 
             DB::commit();
             session()->forget('cart');
