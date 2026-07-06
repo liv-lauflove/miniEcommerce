@@ -56,7 +56,7 @@ class CartController extends Controller
 
         session()->put('cart', $cart);
 
-        return back()->with('success', $product->name . ' berhasil ditambahkan ke cart.');
+        return back()->with('success', $product->name.' berhasil ditambahkan ke cart.');
     }
 
     public function update(Request $request, Product $product)

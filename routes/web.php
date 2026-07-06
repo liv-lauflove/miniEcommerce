@@ -1,16 +1,16 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Services\Auth\AuthController;
-use App\Http\Services\Admin\ProductController;
 use App\Http\Services\Admin\CategoryController;
 use App\Http\Services\Admin\OrderController;
+use App\Http\Services\Admin\ProductController;
+use App\Http\Services\Auth\AuthController;
 use App\Http\Services\Owner\DashboardController as OwnerDashboardController;
-use App\Http\Services\User\CatalogController;
 use App\Http\Services\User\CartController;
+use App\Http\Services\User\CatalogController;
 use App\Http\Services\User\CheckoutController;
 use App\Http\Services\User\OrderController as UserOrderController;
-
+use App\Models\Order;
+use Illuminate\Support\Facades\Route;
 
 // CUSTOMER PUBLIC ROUTES
 Route::get('/', [CatalogController::class, 'home'])->name('home');
@@ -25,7 +25,6 @@ Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('login.process');
 });
-
 
 // ROUTE UNTUK USER YANG SUDAH LOGIN
 Route::middleware('auth')->group(function () {
@@ -48,7 +47,7 @@ Route::middleware('auth')->group(function () {
     // CHECKOUT SUCCESS
     Route::get('/checkout/success/{order}', function ($order) {
 
-        $order = \App\Models\Order::findOrFail($order);
+        $order = Order::findOrFail($order);
 
         return view('customer.checkout.success', compact('order'));
 
@@ -67,22 +66,21 @@ Route::middleware('auth')->group(function () {
 
     // 2. ROUTE KARYAWAN / ADMIN
     Route::prefix('admin')->name('admin.')->group(function () {
-    
-    Route::get('/dashboard', function () {
-        return view('admin.dashboard');
-    })->name('dashboard');
 
-    Route::resource('products', ProductController::class);
+        Route::get('/dashboard', function () {
+            return view('admin.dashboard');
+        })->name('dashboard');
 
-    Route::resource('categories', CategoryController::class)
-        ->except(['create', 'show']);
+        Route::resource('products', ProductController::class);
 
-    Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
-    Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
-    Route::post('orders/{order}/accept', [OrderController::class, 'accept'])->name('orders.accept');
-    Route::patch('orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
+        Route::resource('categories', CategoryController::class)
+            ->except(['create', 'show']);
+
+        Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
+        Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+        Route::post('orders/{order}/accept', [OrderController::class, 'accept'])->name('orders.accept');
+        Route::patch('orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.updateStatus');
     });
-
 
     // 3. ROUTE OWNER / SUPER ADMIN
     Route::prefix('owner')->name('owner.')->group(function () {

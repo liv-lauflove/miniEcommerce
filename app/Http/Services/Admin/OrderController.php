@@ -3,8 +3,10 @@
 namespace App\Http\Services\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Order;
 use App\Models\ActivityLog;
+use App\Models\Order;
+use App\Patterns\Observer\ActivityLogObserver;
+use App\Patterns\Observer\OrderStatusSubject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,9 +22,9 @@ class OrderController extends Controller
                 $search = $request->search;
                 $query->where(function ($subQuery) use ($search) {
                     $subQuery
-                        ->where('recipient_name', 'like', '%' . $search . '%')
-                        ->orWhere('recipient_phone', 'like', '%' . $search . '%')
-                        ->orWhere('address_note', 'like', '%' . $search . '%');
+                        ->where('recipient_name', 'like', '%'.$search.'%')
+                        ->orWhere('recipient_phone', 'like', '%'.$search.'%')
+                        ->orWhere('address_note', 'like', '%'.$search.'%');
                 });
             })
             ->when($request->filled('status'), function ($query) use ($request) {
@@ -43,7 +45,7 @@ class OrderController extends Controller
     public function show(Order $order)
     {
         $order->load(['user', 'orderItems.product']);
-        
+
         $activityLogs = ActivityLog::where('order_id', $order->id)
             ->with('admin')
             ->latest()
@@ -64,15 +66,11 @@ class OrderController extends Controller
         $oldStatus = $order->status;
         $order->update(['status' => 'diproses']);
 
-        // Log aktivitas
-        ActivityLog::create([
-            'admin_id' => Auth::id(),
-            'order_id' => $order->id,
-            'action' => 'accept',
-            'old_status' => $oldStatus,
-            'new_status' => 'diproses',
-            'description' => 'Pesanan diterima oleh ' . Auth::user()->name,
-        ]);
+        // --- OBSERVER PATTERN ---
+        $subject = new OrderStatusSubject($order);
+        $subject->attach(new ActivityLogObserver);
+        $subject->notify('accept', $oldStatus, 'diproses', Auth::id());
+        // ------------------------
 
         return back()->with('success', 'Pesanan berhasil diterima dan status diubah menjadi "Diproses".');
     }
@@ -97,22 +95,18 @@ class OrderController extends Controller
             'tertunda' => ['diproses', 'dikirim'],
         ];
 
-        if (!in_array($validated['status'], $validTransitions[$oldStatus])) {
-            return back()->with('error', 'Transisi status tidak diizinkan. Dari ' . ucfirst($oldStatus) . ' hanya bisa ke: ' . implode(', ', $validTransitions[$oldStatus]));
+        if (! in_array($validated['status'], $validTransitions[$oldStatus])) {
+            return back()->with('error', 'Transisi status tidak diizinkan. Dari '.ucfirst($oldStatus).' hanya bisa ke: '.implode(', ', $validTransitions[$oldStatus]));
         }
 
         $order->update(['status' => $validated['status']]);
 
-        // Log aktivitas
-        ActivityLog::create([
-            'admin_id' => Auth::id(),
-            'order_id' => $order->id,
-            'action' => 'update_status',
-            'old_status' => $oldStatus,
-            'new_status' => $validated['status'],
-            'description' => 'Status pesanan diubah dari ' . ucfirst($oldStatus) . ' menjadi ' . ucfirst($validated['status']) . ' oleh ' . Auth::user()->name,
-        ]);
+        // --- OBSERVER PATTERN ---
+        $subject = new OrderStatusSubject($order);
+        $subject->attach(new ActivityLogObserver);
+        $subject->notify('update_status', $oldStatus, $validated['status'], Auth::id());
+        // ------------------------
 
-        return back()->with('success', 'Status pesanan berhasil diperbarui menjadi ' . ucfirst($validated['status']) . '.');
+        return back()->with('success', 'Status pesanan berhasil diperbarui menjadi '.ucfirst($validated['status']).'.');
     }
 }
