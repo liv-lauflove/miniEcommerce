@@ -18,9 +18,11 @@ class CheckoutController extends Controller
 {
     private DistanceService $distanceService;
 
-    public function __construct()
+    // SINGLETON PATTERN — DistanceService di-inject melalui constructor
+    // Laravel Service Container akan otomatis me-resolve singleton instance
+    public function __construct(DistanceService $distanceService)
     {
-        $this->distanceService = new DistanceService;
+        $this->distanceService = $distanceService;
     }
 
     public function index()
