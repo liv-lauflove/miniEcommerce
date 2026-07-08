@@ -37,17 +37,111 @@ Sistem ini dirancang untuk dua pengguna utama:
 ## 5. Arsitektur & Design Patterns
 Project ini menerapkan pendekatan **Layered Architecture** di atas fondasi MVC Laravel. Terdapat pemisahan jelas antara *Presentation Layer* (Controllers/Views), *Business Logic Layer* (Services), dan *Data Access Layer* (Models).
 
+### Diagram Arsitektur
+
+```mermaid
+flowchart TD
+    User([User / Customer / Admin])
+
+    subgraph Presentation Layer
+        Route[Routes / web.php]
+        Controller[Controllers]
+        View[Blade Views / UI]
+    end
+
+    subgraph Business Logic Layer
+        Service[Service Classes]
+        Pattern[Design Patterns Implementation]
+    end
+
+    subgraph Data Access Layer
+        Model[Eloquent Models]
+        DB[(MySQL Database)]
+    end
+
+    User <-->|Request / Response| Route
+    Route --> Controller
+    Controller -->|Return| View
+    Controller <-->|Call| Service
+    Service <-->|Data Request| Model
+    Model <--> DB
+```
+
 Selain itu, project ini mengimplementasikan beberapa Design Pattern (GoF):
 - **Singleton Pattern:** Digunakan pada `DistanceService` untuk efisiensi memori (koordinat toko statis).
 - **Factory Method Pattern:** Digunakan pada *Role-based redirection* saat user login.
 - **Strategy & Observer Pattern:** Diimplementasikan untuk mengelola aksi dinamis.
 
-💡 **Penjelasan detail dan diagram Arsitektur:** Silakan lihat [docs/arsitektur.md](docs/arsitektur.md).
+*(Rincian teknis Class Diagram dari Design Patterns dapat dilihat di folder `docs/arsitektur.md`)*
 
 ## 6. Database & ERD
 Aplikasi ini memiliki tabel utama: `users`, `categories`, `products`, `orders`, dan `order_items`.
 
-💡 **Lihat Entity Relationship Diagram (ERD):** Silakan lihat [docs/database.md](docs/database.md).
+### Entity Relationship Diagram (ERD)
+
+```mermaid
+erDiagram
+    USERS {
+        bigint id PK
+        string name
+        string email
+        string password
+        string role "admin, customer"
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    CATEGORIES {
+        bigint id PK
+        string name
+        string slug
+        string description
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    PRODUCTS {
+        bigint id PK
+        bigint category_id FK
+        string name
+        string slug
+        text description
+        decimal price
+        int stock
+        string image_url
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    ORDERS {
+        bigint id PK
+        bigint user_id FK
+        string order_number
+        string status "pending, processing, completed, cancelled"
+        decimal total_amount
+        text shipping_address
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    ORDER_ITEMS {
+        bigint id PK
+        bigint order_id FK
+        bigint product_id FK
+        int quantity
+        decimal price
+        decimal subtotal
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    USERS ||--o{ ORDERS : places
+    CATEGORIES ||--o{ PRODUCTS : contains
+    PRODUCTS ||--o{ ORDER_ITEMS : "included in"
+    ORDERS ||--|{ ORDER_ITEMS : has
+```
+
+*(Penjelasan lengkap mengenai masing-masing tabel tersedia di `docs/database.md`)*
 
 ## 7. Cara Menjalankan Project Secara Lokal
 
@@ -93,3 +187,4 @@ Setiap riwayat perubahan direkam menggunakan standar **Conventional Commits**:
 - `docs:` Pembaruan dokumentasi.
 
 ---
+**Author:** Liv Lauflove (Olyvia) 
