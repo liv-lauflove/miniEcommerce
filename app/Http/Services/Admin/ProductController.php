@@ -20,8 +20,8 @@ class ProductController extends Controller
 
                 $query->where(function ($subQuery) use ($search) {
                     $subQuery
-                        ->where('name', 'like', '%' . $search . '%')
-                        ->orWhere('description', 'like', '%' . $search . '%');
+                        ->where('name', 'like', '%'.$search.'%')
+                        ->orWhere('description', 'like', '%'.$search.'%');
                 });
             })
             ->when($request->filled('category_id'), function ($query) use ($request) {

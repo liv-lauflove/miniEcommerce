@@ -2,10 +2,11 @@
 
 @section('content')
     <section class="space-y-8">
-        <div class="rounded-[2rem] bg-white p-5 shadow-sm ring-1 ring-slate-200/70 sm:p-7 lg:p-8">
+        {{-- Page Header Card --}}
+        <div class="border-t-4 border-[#006B3F] rounded-[2rem] bg-white p-5 shadow-sm ring-1 ring-[#006B3F]/10 sm:p-7 lg:p-8">
             <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
                 <div>
-                    <p class="text-sm font-black uppercase tracking-wide text-red-600">
+                    <p class="text-sm font-black uppercase tracking-wide text-[#D42027]">
                         Katalog Produk
                     </p>
 
@@ -21,17 +22,18 @@
                 @if (request('search'))
                     <a
                         href="{{ route('categories.index', request('category_id') ? ['category_id' => request('category_id')] : []) }}"
-                        class="inline-flex w-fit items-center rounded-full bg-red-50 px-4 py-2 text-sm font-bold text-red-600 transition hover:bg-red-100"
+                        class="inline-flex w-fit items-center rounded-full bg-[#D42027]/10 px-4 py-2 text-sm font-bold text-[#D42027] transition hover:bg-[#D42027]/20"
                     >
                         Hapus pencarian: "{{ request('search') }}"
                     </a>
                 @endif
             </div>
 
-            <div class="mt-7 flex gap-3 overflow-x-auto pb-1">
+            {{-- Category Filter Pills --}}
+            <div class="mt-7 flex gap-3 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                 <a
                     href="{{ route('categories.index', request('search') ? ['search' => request('search')] : []) }}"
-                    class="{{ request('category_id') ? 'bg-slate-100 text-slate-600 ring-slate-200' : 'bg-yellow-400 text-slate-950 ring-yellow-300' }} whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-black ring-1 transition hover:bg-yellow-400 hover:text-slate-950"
+                    class="{{ request('category_id') ? 'bg-white text-slate-600 ring-1 ring-slate-200 hover:bg-[#006B3F]/10 hover:text-[#006B3F] hover:ring-[#006B3F]/30' : 'bg-[#006B3F] text-white ring-2 ring-[#006B3F]/50' }} whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-black transition-all duration-200"
                 >
                     Semua
                 </a>
@@ -39,7 +41,7 @@
                 @foreach ($categories as $category)
                     <a
                         href="{{ route('categories.index', array_filter(['category_id' => $category->id, 'search' => request('search')])) }}"
-                        class="{{ (string) request('category_id') === (string) $category->id ? 'bg-yellow-400 text-slate-950 ring-yellow-300' : 'bg-slate-100 text-slate-600 ring-slate-200' }} whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-black ring-1 transition hover:bg-yellow-400 hover:text-slate-950"
+                        class="{{ (string) request('category_id') === (string) $category->id ? 'bg-[#006B3F] text-white ring-2 ring-[#006B3F]/50' : 'bg-white text-slate-600 ring-1 ring-slate-200 hover:bg-[#006B3F]/10 hover:text-[#006B3F] hover:ring-[#006B3F]/30' }} whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-black transition-all duration-200"
                     >
                         {{ $category->name }}
                     </a>
@@ -47,11 +49,19 @@
             </div>
         </div>
 
+        {{-- Product Grid --}}
         <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             @forelse ($products as $product)
                 @include('customer.partials.product-card', ['product' => $product])
             @empty
-                <div class="col-span-full rounded-[2rem] border border-dashed border-slate-300 bg-white p-10 text-center">
+                <div class="col-span-full rounded-[2rem] border-2 border-dashed border-[#006B3F]/20 bg-white p-10 text-center">
+                    {{-- Empty State Icon --}}
+                    <div class="mx-auto mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-[#006B3F]/5">
+                        <svg class="h-10 w-10 text-[#006B3F]/40" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                        </svg>
+                    </div>
+
                     <h3 class="text-xl font-black text-slate-950">
                         Produk tidak ditemukan
                     </h3>
@@ -60,14 +70,15 @@
                         Coba pilih kategori lain atau gunakan kata kunci pencarian yang berbeda.
                     </p>
 
-                    <a href="{{ route('categories.index') }}" class="mt-5 inline-flex rounded-full bg-yellow-400 px-5 py-2.5 text-sm font-black text-slate-950 transition hover:bg-yellow-300">
+                    <a href="{{ route('categories.index') }}" class="mt-5 inline-flex rounded-full bg-[#006B3F] px-5 py-2.5 text-sm font-black text-white transition hover:bg-[#005432]">
                         Lihat Semua Produk
                     </a>
                 </div>
             @endforelse
         </div>
 
-        <div>
+        {{-- Pagination --}}
+        <div class="mt-8 flex justify-center">
             {{ $products->links() }}
         </div>
     </section>

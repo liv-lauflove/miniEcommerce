@@ -70,8 +70,8 @@ class CatalogController extends Controller
 
                 $query->where(function ($subQuery) use ($search) {
                     $subQuery
-                        ->where('name', 'like', '%' . $search . '%')
-                        ->orWhere('description', 'like', '%' . $search . '%');
+                        ->where('name', 'like', '%'.$search.'%')
+                        ->orWhere('description', 'like', '%'.$search.'%');
                 });
             })
             ->latest()

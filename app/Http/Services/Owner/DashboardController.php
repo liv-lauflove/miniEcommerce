@@ -4,8 +4,8 @@ namespace App\Http\Services\Owner;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
-use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -16,15 +16,15 @@ class DashboardController extends Controller
     {
         // Default filter: current month
         $period = $request->get('period', 'month');
-        
+
         if ($period === 'month') {
             $startDate = Carbon::now()->startOfMonth();
             $endDate = Carbon::now()->endOfMonth();
-            $label = 'Bulan ' . Carbon::now()->translatedFormat('F Y');
+            $label = 'Bulan '.Carbon::now()->translatedFormat('F Y');
         } else {
             $startDate = Carbon::now()->startOfDay();
             $endDate = Carbon::now()->endOfDay();
-            $label = 'Hari Ini - ' . Carbon::now()->translatedFormat('d F Y');
+            $label = 'Hari Ini - '.Carbon::now()->translatedFormat('d F Y');
         }
 
         // Total Revenue
@@ -116,7 +116,7 @@ class DashboardController extends Controller
 
         return [
             'labels' => $labels,
-            'data' => $data
+            'data' => $data,
         ];
     }
 

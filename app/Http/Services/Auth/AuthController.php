@@ -4,15 +4,21 @@ namespace App\Http\Services\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Services\Auth\RoleBasedRedirectorFactory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    // FACTORY METHOD PATTERN — Inject factory via constructor (Dependency Injection)
+    public function __construct(
+        private RoleBasedRedirectorFactory $redirectorFactory
+    ) {}
+
     public function showRegister()
     {
-    return view('auth.register'); 
+        return view('auth.register');
     }
 
     public function register(Request $request)
@@ -34,7 +40,7 @@ class AuthController extends Controller
 
     public function showLogin()
     {
-    return view('auth.login'); 
+        return view('auth.login');
     }
 
     public function login(Request $request)
@@ -47,15 +53,14 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            $role = auth()->user()->role;
+            // FACTORY METHOD PATTERN
+            // Menggunakan factory untuk membuat redirector sesuai role user.
+            // Factory akan memanggil createRedirector() yang mengembalikan
+            // concrete redirector (OwnerRedirector, AdminRedirector, atau UserRedirector).
+            // Menambah role baru cukup buat class Redirector baru + tambah entry di factory.
+            $user = auth()->user();
 
-            if ($role === 'super_admin') {
-                return redirect()->intended('/owner/dashboard');
-            } elseif ($role === 'admin') {
-                return redirect()->intended('/admin/dashboard');
-            } else {
-                return redirect()->intended('/user/dashboard');
-            }
+            return $this->redirectorFactory->redirect($user);
         }
 
         return back()->withErrors([
@@ -68,6 +73,7 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
+
         return redirect('/login');
     }
 }
