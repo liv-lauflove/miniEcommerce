@@ -190,7 +190,7 @@ Setiap riwayat perubahan direkam menggunakan standar **Conventional Commits**:
 | No | Nama | Kontribusi | Link Video |
 |---|---|---|---|
 | 1 | Olyvia Audy Djoahri (42430058)| membuat dahboard CRUD admin, katalog produk customer| https://drive.google.com/drive/folders/1l3MB-fhEq6o1WiiNhLrqGYjxHo29BlO6?usp=sharing|
-| 2 | | | |
+| 2 | Ni Komang Dewi Mahayani(42430028)| Registrasi, Login, Logout, Manajemen Role User, Riwayat Pesanan | https://drive.google.com/drive/folders/1XZn09LYDvnO967SLjclgFk-eiVJEa_Qa?usp=sharing |
 | 3 | | | |
 | 4 | | | |
 | 5 | | | |
