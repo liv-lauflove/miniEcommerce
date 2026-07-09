@@ -70,7 +70,6 @@ flowchart TD
 Selain itu, project ini mengimplementasikan beberapa Design Pattern (GoF):
 - **Singleton Pattern:** Digunakan pada `DistanceService` untuk efisiensi memori (koordinat toko statis).
 - **Factory Method Pattern:** Digunakan pada *Role-based redirection* saat user login.
-- **Strategy & Observer Pattern:** Diimplementasikan untuk mengelola aksi dinamis.
 
 *(Rincian teknis Class Diagram dari Design Patterns dapat dilihat di folder `docs/arsitektur.md`)*
 
@@ -186,5 +185,15 @@ Setiap riwayat perubahan direkam menggunakan standar **Conventional Commits**:
 - `refactor:` Merapikan atau mengubah struktur kode (seperti UI Redesign).
 - `docs:` Pembaruan dokumentasi.
 
+## 10. Anggota Kelompok dan Kontribusi
+
+| No | Nama | Kontribusi | Link Video |
+|---|---|---|---|
+| 1 | Olyvia Audy Djoahri (42430058)| membuat dahboard CRUD admin, katalog produk customer| https://drive.google.com/drive/folders/1l3MB-fhEq6o1WiiNhLrqGYjxHo29BlO6?usp=sharing|
+| 2 | | | |
+| 3 | | | |
+| 4 | | | |
+| 5 | | | |
+
 ---
-**Author:** Liv Lauflove (Olyvia) 
+
