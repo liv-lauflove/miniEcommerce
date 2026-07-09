@@ -191,7 +191,7 @@ Setiap riwayat perubahan direkam menggunakan standar **Conventional Commits**:
 |---|---|---|---|
 | 1 | Olyvia Audy Djohari (42430058)|Pembuatan Fitur Manajemen Data (CRUD) Admin, Pembuatan Katalog Produk dan Dashboard Customer| https://drive.google.com/drive/folders/1l3MB-fhEq6o1WiiNhLrqGYjxHo29BlO6?usp=sharing|
 | 2 | Ni Komang Dewi Mahayani(42430028)| Registrasi, Login, Logout, Manajemen Role User, Riwayat Pesanan | https://drive.google.com/drive/folders/1XZn09LYDvnO967SLjclgFk-eiVJEa_Qa?usp=sharing |
-| 3 | | | |
+| 3 | Gede Troy Wiswama Bhareswara (42430052)| Implementasi Fitur Geolokasi Real-Time (perhitungan jarak toko ke user pada proses checkout), penerapan Singleton Pattern pada DistanceService, serta integrasi Dependency Injection di CheckoutController | https://drive.google.com/drive/folders/1zOAc1ANN0H_nvk7L-PUSA8kHk417HYHr?usp=drive_link |
 | 4 | | | |
 | 5 | | | |
 
