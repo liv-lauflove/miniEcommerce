@@ -193,7 +193,7 @@ Setiap riwayat perubahan direkam menggunakan standar **Conventional Commits**:
 | 2 | Ni Komang Dewi Mahayani(42430028)| Registrasi, Login, Logout, Manajemen Role User, Riwayat Pesanan | https://drive.google.com/drive/folders/1XZn09LYDvnO967SLjclgFk-eiVJEa_Qa?usp=sharing |
 | 3 | Gede Troy Wiswama Bhareswara (42430052)| Implementasi Fitur Geolokasi Real-Time (perhitungan jarak toko ke user pada proses checkout), penerapan Singleton Pattern pada DistanceService, serta integrasi Dependency Injection di CheckoutController | https://drive.google.com/drive/folders/1zOAc1ANN0H_nvk7L-PUSA8kHk417HYHr?usp=drive_link |
 | 4 | Meizaluna Aurelia Frakasa (42430045)| Pengembangan Fitur Manajemen Pesanan, Dashboard Owner, Pengelolaan Status Pesanan, dan Monitoring Data Penjualan| https://drive.google.com/file/d/1B9KxipBRpwq8CT1go4xQ66e7BAskyQEw/view?usp=drivesdk|
-| 5 | | | |
+| 5 |Gede Sathya Pratama Deva (42430056) | fitur check out, validasi stock barang, proses transaksi pesanan|https://drive.google.com/drive/folders/15alryhk8k4R1Ske4LEgXdwq5CfiGwXlA|
 
 ---
 
